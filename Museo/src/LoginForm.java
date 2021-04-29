@@ -1,6 +1,7 @@
+import dao.MysqlConnect;
+
 import javax.swing.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,10 +34,9 @@ public class LoginForm {
                     errorLabel.setText("Entrer un mot de passe");
                 } else {
 
-                    MysqlConnect mysqlConnect = new MysqlConnect();
                     try {
                         String sql = "SELECT * FROM `USER` WHERE email=? LIMIT 1";
-                        PreparedStatement statement = mysqlConnect.connect().prepareStatement(sql);
+                        PreparedStatement statement = MysqlConnect.connect().prepareStatement(sql);
                         statement.setString(1, email);
 
                         ResultSet result = statement.executeQuery();
@@ -54,11 +54,11 @@ public class LoginForm {
 
                         result.close();
                         statement.close();
-                        mysqlConnect.disconnect();
-                    } catch (SQLException | IOException exception) {
+                        MysqlConnect.disconnect();
+                    } catch (SQLException exception) {
                         exception.printStackTrace();
                     } finally {
-                        mysqlConnect.disconnect();
+                        MysqlConnect.disconnect();
                     }
                 }
             }
