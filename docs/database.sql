@@ -93,6 +93,9 @@ CREATE TABLE `PROPERTY_STATE`
     PRIMARY KEY (property_id, state_id)
 );
 
+INSERT INTO `USER` VALUES
+('dba28fa8-6d58-4f5a-b158-eeadddbb1ea4', 'Michel', 'TESTEUR', 'michel.testeur@mail.com', 'test123');
+
 ALTER TABLE `WORK`
 ADD FOREIGN KEY (category_id)   REFERENCES `CATEGORY`(id),
 ADD FOREIGN KEY (made_by_id)    REFERENCES `ARTIST`(id),
