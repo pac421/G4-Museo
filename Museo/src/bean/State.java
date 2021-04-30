@@ -35,4 +35,9 @@ public class State {
     public void setLabel(String label) {
         this.label = label;
     }
+
+    @Override
+    public String toString() {
+        return "State : " + label;
+    }
 }

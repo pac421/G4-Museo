@@ -35,4 +35,10 @@ public class Role {
     public void setLabel(String label) {
         this.label = label;
     }
+
+
+    @Override
+    public String toString() {
+        return "Role : " + label;
+    }
 }
