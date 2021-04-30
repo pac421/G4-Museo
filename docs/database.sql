@@ -9,7 +9,6 @@ CREATE TABLE `WORK`
     depth         FLOAT        NOT NULL,
     weight        FLOAT        NOT NULL,
     category_id   VARCHAR(36)  NOT NULL,
-    made_by_id    VARCHAR(36)  NULL,
     collection_id VARCHAR(36)  NULL,
     deleted_at    DATETIME     NULL,
     deleted_by_id VARCHAR(36)  NULL,
@@ -73,6 +72,14 @@ CREATE TABLE `USER`
     lastname  VARCHAR(64)  NOT NULL,
     email     VARCHAR(255) NOT NULL,
     password  VARCHAR(255) NOT NULL,
+    role_id	  VARCHAR(36)  NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE `ROLE`
+(
+    id    VARCHAR(36)  NOT NULL,
+    label VARCHAR(64) NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -93,12 +100,21 @@ CREATE TABLE `PROPERTY_STATE`
     PRIMARY KEY (property_id, state_id)
 );
 
+CREATE TABLE `ARTIST_WORK`
+(
+	artist_id VARCHAR(36)  NOT NULL,
+	work_id    VARCHAR(36)  NOT NULL,
+    PRIMARY KEY (artist_id, work_id)
+);
+
+INSERT INTO `ROLE` VALUES
+('8f818b53-969b-4cd9-8159-6ddce75e5710', 'Superadmin');
+
 INSERT INTO `USER` VALUES
-('dba28fa8-6d58-4f5a-b158-eeadddbb1ea4', 'Michel', 'TESTEUR', 'michel.testeur@mail.com', 'test123');
+('dba28fa8-6d58-4f5a-b158-eeadddbb1ea4', 'Michel', 'TESTEUR', 'michel.testeur@mail.com', 'test123', '8f818b53-969b-4cd9-8159-6ddce75e5710');
 
 ALTER TABLE `WORK`
 ADD FOREIGN KEY (category_id)   REFERENCES `CATEGORY`(id),
-ADD FOREIGN KEY (made_by_id)    REFERENCES `ARTIST`(id),
 ADD FOREIGN KEY (collection_id) REFERENCES `COLLECTION`(id),
 ADD FOREIGN KEY (deleted_by_id) REFERENCES `USER`(id);
 
@@ -111,7 +127,14 @@ ADD FOREIGN KEY (work_id) REFERENCES `WORK`(id);
 ALTER TABLE `PICTURE`
 ADD FOREIGN KEY (work_id) REFERENCES `WORK`(id);
 
+ALTER TABLE `USER`
+ADD FOREIGN KEY (role_id) REFERENCES `ROLE`(id);
+
 ALTER TABLE `PROPERTY_STATE`
 ADD FOREIGN KEY (property_id) REFERENCES `PROPERTY`(work_id),
 ADD FOREIGN KEY (state_id)    REFERENCES `STATE`(id);
+
+ALTER TABLE `ARTIST_WORK`
+ADD FOREIGN KEY (artist_id) REFERENCES `ARTIST`(id),
+ADD FOREIGN KEY (work_id)    REFERENCES `WORK`(id);
 
