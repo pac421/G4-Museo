@@ -8,12 +8,19 @@ public class Collection {
 
     public Collection(){
     }
+
+    /*
+     * Constructor for creating a Collection that does not exists yet in DB
+     */
     public Collection(String label, String period){
         this.id = UUID.randomUUID().toString();
         this.label = label;
         this.period= period;
     }
 
+    /*
+     * Constructor for CollectionDAO
+     */
     public Collection(String id, String label, String period) {
         this.id = id;
         this.label = label;
@@ -42,6 +49,6 @@ public class Collection {
 
     @Override
     public String toString() {
-        return id + " - " + label + " - "+ period ;
+        return id + " - " + label + " - " + period ;
     }
 }

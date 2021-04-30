@@ -1,29 +1,29 @@
 package dao;
 
-
-import bean.Category;
+import bean.Role;
+import bean.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CategoryDAO extends DAO<Category> {
+public class RoleDAO extends DAO<Role> {
     @Override
-    public Category find(String id) {
+    public Role find(String id) {
         try {
-            String sql = "SELECT * FROM CATEGORY WHERE id = ?";
+            String sql = "SELECT * FROM ROLE WHERE id = ?";
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setString(1, id);
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
                 String label = result.getString("label");
-                Category category = new Category(id, label);
+                Role role = new Role(id, label);
 
                 result.close();
                 statement.close();
 
-                return category;
+                return role;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,19 +33,18 @@ public class CategoryDAO extends DAO<Category> {
     }
 
     @Override
-    public Category create(Category category) {
+    public Role create(Role role) {
         try {
-            String sql = "INSERT INTO CATEGORY (id, label) VALUES (?,?)";
+            String sql = "INSERT INTO ROLE (id, label) VALUES (?, ?)";
             PreparedStatement statement = connect.prepareStatement(sql);
 
-            statement.setString(1, category.getId());
-            statement.setString(2, category.getLabel());
-
+            statement.setString(1, role.getId());
+            statement.setString(2, role.getLabel());
             int rows = statement.executeUpdate();
             statement.close();
 
             if (rows > 0) {
-                return category;
+                return role;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,17 +54,17 @@ public class CategoryDAO extends DAO<Category> {
     }
 
     @Override
-    public Category update(Category category) {
+    public Role update(Role role) {
         try {
-            String sql = "UPDATE CATEGORY SET label = ? WHERE id = ?";
+            String sql = "UPDATE ROLE SET label = ? WHERE id = ?";
             PreparedStatement statement = connect.prepareStatement(sql);
-            statement.setString(1, category.getLabel());
-            statement.setString(2, category.getId());
+            statement.setString(1, role.getLabel());
+            statement.setString(2, role.getId());
             int rows = statement.executeUpdate();
             statement.close();
 
             if (rows > 0) {
-                return category;
+                return role;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,11 +74,11 @@ public class CategoryDAO extends DAO<Category> {
     }
 
     @Override
-    public void delete(Category category) {
+    public void delete(Role role) {
         try {
-            String sql = "DELETE FROM CATEGORY WHERE id = ?";
+            String sql = "DELETE FROM ROLE WHERE id = ?";
             PreparedStatement statement = connect.prepareStatement(sql);
-            statement.setString(1, category.getId());
+            statement.setString(1, role.getId());
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {

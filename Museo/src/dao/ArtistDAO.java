@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ArtistDAO extends DAO<Artist> {
+    @Override
     public Artist find(String id) {
         try {
             String sql = "SELECT * FROM ARTIST WHERE id = ?";
@@ -32,6 +33,7 @@ public class ArtistDAO extends DAO<Artist> {
         return null;
     }
 
+    @Override
     public Artist create(Artist artist) {
         try {
             String sql = "INSERT INTO ARTIST (id, firstname, lastname, period) VALUES (?, ?, ?, ?)";
@@ -54,6 +56,7 @@ public class ArtistDAO extends DAO<Artist> {
         return null;
     }
 
+    @Override
     public Artist update(Artist artist) {
         try {
             String sql = "UPDATE ARTIST SET firstname = ?, lastname = ?, period = ? WHERE id = ?";
@@ -75,6 +78,7 @@ public class ArtistDAO extends DAO<Artist> {
         return null;
     }
 
+    @Override
     public void delete(Artist artist) {
         try {
             String sql = "DELETE FROM ARTIST WHERE id = ?";

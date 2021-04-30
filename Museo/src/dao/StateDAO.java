@@ -1,29 +1,29 @@
 package dao;
 
-
-import bean.Category;
+import bean.Role;
+import bean.State;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CategoryDAO extends DAO<Category> {
+public class StateDAO extends DAO<State> {
     @Override
-    public Category find(String id) {
+    public State find(String id) {
         try {
-            String sql = "SELECT * FROM CATEGORY WHERE id = ?";
+            String sql = "SELECT * FROM STATE WHERE id = ?";
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setString(1, id);
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
                 String label = result.getString("label");
-                Category category = new Category(id, label);
+                State state = new State(id, label);
 
                 result.close();
                 statement.close();
 
-                return category;
+                return state;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,19 +33,18 @@ public class CategoryDAO extends DAO<Category> {
     }
 
     @Override
-    public Category create(Category category) {
+    public State create(State state) {
         try {
-            String sql = "INSERT INTO CATEGORY (id, label) VALUES (?,?)";
+            String sql = "INSERT INTO STATE (id, label) VALUES (?, ?)";
             PreparedStatement statement = connect.prepareStatement(sql);
 
-            statement.setString(1, category.getId());
-            statement.setString(2, category.getLabel());
-
+            statement.setString(1, state.getId());
+            statement.setString(2, state.getLabel());
             int rows = statement.executeUpdate();
             statement.close();
 
             if (rows > 0) {
-                return category;
+                return state;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,17 +54,17 @@ public class CategoryDAO extends DAO<Category> {
     }
 
     @Override
-    public Category update(Category category) {
+    public State update(State state) {
         try {
-            String sql = "UPDATE CATEGORY SET label = ? WHERE id = ?";
+            String sql = "UPDATE STATE SET label = ? WHERE id = ?";
             PreparedStatement statement = connect.prepareStatement(sql);
-            statement.setString(1, category.getLabel());
-            statement.setString(2, category.getId());
+            statement.setString(1, state.getLabel());
+            statement.setString(2, state.getId());
             int rows = statement.executeUpdate();
             statement.close();
 
             if (rows > 0) {
-                return category;
+                return state;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,11 +74,11 @@ public class CategoryDAO extends DAO<Category> {
     }
 
     @Override
-    public void delete(Category category) {
+    public void delete(State state) {
         try {
-            String sql = "DELETE FROM CATEGORY WHERE id = ?";
+            String sql = "DELETE FROM STATE WHERE id = ?";
             PreparedStatement statement = connect.prepareStatement(sql);
-            statement.setString(1, category.getId());
+            statement.setString(1, state.getId());
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {

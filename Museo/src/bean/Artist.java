@@ -8,6 +8,9 @@ public class Artist {
     public Artist() {
     }
 
+    /*
+     * Constructor for creating a Artist that does not exists yet in DB
+     */
     public Artist(String firstname, String lastname, String period) {
         this.id = UUID.randomUUID().toString();
         this.firstname = firstname;
@@ -15,6 +18,9 @@ public class Artist {
         this.period = period;
     }
 
+    /*
+     * Constructor for ArtistDAO
+     */
     public Artist(String id, String firstname, String lastname, String period) {
         this.id = id;
         this.firstname = firstname;

@@ -1,24 +1,25 @@
 package bean;
+
 import java.util.UUID;
 
-public class Category {
+public class State {
     private String id, label;
 
-    public Category() {
+    public State() {
     }
 
     /*
-     * Constructor for creating a Category that does not exists yet in DB
+     * Constructor for creating a State that does not exists yet in DB
      */
-    public Category(String label) {
+    public State(String label) {
         this.id = UUID.randomUUID().toString();
         this.label = label;
     }
 
     /*
-     * Constructor for CategoryDAO
+     * Constructor for StateDAO
      */
-    public Category(String id, String label) {
+    public State(String id, String label) {
         this.id = id;
         this.label = label;
     }
@@ -34,11 +35,4 @@ public class Category {
     public void setLabel(String label) {
         this.label = label;
     }
-
-    @Override
-    public String toString() {
-        return id + " - " + label ;
-    }
 }
-
-
