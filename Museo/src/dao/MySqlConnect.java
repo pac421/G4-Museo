@@ -32,14 +32,13 @@ public class MysqlConnect {
     public static void setAttributes() {
         try {
             Properties properties = new Properties();
-            FileInputStream in = new FileInputStream("resources/db.properties");
+            FileInputStream in = new FileInputStream("Museo/resources/db.properties.example");
             properties.load(in);
             in.close();
 
             driver = properties.getProperty("jdbc.driver");
             url = properties.getProperty("jdbc.url");
             username = properties.getProperty("jdbc.username");
-            password = properties.getProperty("jdbc.password");
         } catch (IOException e) {
             e.printStackTrace();
         }
