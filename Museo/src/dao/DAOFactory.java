@@ -27,5 +27,17 @@ public class DAOFactory {
     public static DAO<State> getStateDAO(){
         return new StateDAO();
     }
+
+    public static DAO<Work> getWorkDAO(){
+        return new WorkDAO();
+    }
+
+    public static DAO<Property> getPropertyDAO(){
+        return new PropertyDAO();
+    }
+
+    public static DAO<Lend> getLendDAO(){
+        return new LendDAO();
+    }
 }
 

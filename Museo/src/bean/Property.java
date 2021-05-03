@@ -1,7 +1,7 @@
 package bean;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 public class Property extends Work {
     private Date ownedAt;
@@ -15,8 +15,8 @@ public class Property extends Work {
     /*
      * Constructor for creating a Property that does not exists yet in DB
      */
-    public Property(String label, String description, String period, double height, double width, double depth, double weight, Collection collection, Category category, ArrayList<Artist> madeBy, Date ownedAt, String ownedFrom, double price) {
-        super(label, description, period, height, width, depth, weight, collection, category, madeBy);
+    public Property(String label, String description, String period, double height, double width, double depth, double weight, Collection collection, Category category, Date ownedAt, String ownedFrom, double price) {
+        super(label, description, period, height, width, depth, weight, collection, category);
         this.ownedAt = ownedAt;
         this.ownedFrom = ownedFrom;
         this.price = price;
@@ -25,8 +25,8 @@ public class Property extends Work {
     /*
      * Constructor for PropertyDAO
      */
-    public Property(String id, String label, String description, String period, double height, double width, double depth, double weight, Date deletedAt, User deletedBy, Collection collection, Category category, ArrayList<Artist> madeBy, ArrayList<Picture> pictures, Date ownedAt, String ownedFrom, double price, PropertyState propertyState) {
-        super(id, label, description, period, height, width, depth, weight, deletedAt, deletedBy, collection, category, madeBy, pictures);
+    public Property(String id, String label, String description, String period, double height, double width, double depth, double weight, Date deletedAt, User deletedBy, Collection collection, Category category, Date ownedAt, String ownedFrom, double price) {
+        super(id, label, description, period, height, width, depth, weight, deletedAt, deletedBy, collection, category);
         this.ownedAt = ownedAt;
         this.ownedFrom = ownedFrom;
         this.price = price;

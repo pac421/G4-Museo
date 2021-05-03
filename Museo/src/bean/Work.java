@@ -1,7 +1,7 @@
 package bean;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.UUID;
 
 public class Work {
@@ -20,7 +20,7 @@ public class Work {
     /*
      * Constructor for creating a Work that does not exists yet in DB
      */
-    public Work(String label, String description, String period, double height, double width, double depth, double weight, Collection collection, Category category, ArrayList<Artist> madeBy) {
+    public Work(String label, String description, String period, double height, double width, double depth, double weight, Collection collection, Category category) {
         this.id = UUID.randomUUID().toString();
         this.label = label;
         this.description = description;
@@ -37,7 +37,7 @@ public class Work {
     /*
      * Constructor for WorkDAO
      */
-    public Work(String id, String label, String description, String period, double height, double width, double depth, double weight, Date deletedAt, User deletedBy, Collection collection, Category category, ArrayList<Artist> madeBy, ArrayList<Picture> pictures) {
+    public Work(String id, String label, String description, String period, double height, double width, double depth, double weight, Date deletedAt, User deletedBy, Collection collection, Category category) {
         this.id = id;
         this.label = label;
         this.description = description;
