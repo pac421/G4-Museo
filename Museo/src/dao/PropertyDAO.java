@@ -6,8 +6,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class PropertyDAO extends DAO<Property> {
+
+    @Override
+    public ArrayList<Property> findAll() {
+        return null;
+    }
 
     @Override
     public Property find(String id) {

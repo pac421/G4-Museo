@@ -1,13 +1,42 @@
 package dao;
 
+import bean.Artist;
 import bean.Role;
+import bean.State;
 import bean.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public class RoleDAO extends DAO<Role> {
+    @Override
+    public ArrayList<Role> findAll() {
+        try {
+            String sql = "SELECT * FROM ROLE";
+            Statement statement = connect.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+
+            ArrayList<Role> roles = new ArrayList<>();
+            while (result.next()) {
+                String id = result.getString("id");
+                String label = result.getString("label");
+                Role role = new Role(id, label);
+                roles.add(role);
+            }
+            result.close();
+            statement.close();
+
+            return roles;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     @Override
     public Role find(String id) {
         try {

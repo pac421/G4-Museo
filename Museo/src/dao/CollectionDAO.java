@@ -1,13 +1,40 @@
 package dao;
 
-import bean.Artist;
 import bean.Collection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public class CollectionDAO extends DAO<Collection> {
+    @Override
+    public ArrayList<Collection> findAll() {
+        try {
+            String sql = "SELECT * FROM COLLECTION";
+            Statement statement = connect.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+
+            ArrayList<Collection> collections = new ArrayList<>();
+            while (result.next()) {
+                String id = result.getString("id");
+                String label = result.getString("label");
+                String period = result.getString("period");
+                Collection collection = new Collection(id, label, period);
+                collections.add(collection);
+            }
+            result.close();
+            statement.close();
+
+            return collections;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     @Override
     public Collection find(String id) {
         try {

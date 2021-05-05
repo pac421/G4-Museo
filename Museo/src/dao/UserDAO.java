@@ -6,8 +6,43 @@ import bean.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public class UserDAO extends DAO<User> {
+    @Override
+    public ArrayList<User> findAll() {
+        try {
+            String sql = "SELECT * FROM USER" +
+                    " LEFT JOIN ROLE ON USER.role_id = ROLE.id";
+            Statement statement = connect.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+
+            ArrayList<User> users = new ArrayList<>();
+            while (result.next()) {
+                String id = result.getString("id");
+                String firstname = result.getString("firstname");
+                String lastname = result.getString("lastname");
+                String email = result.getString("email");
+                String password = result.getString("password");
+                String roleId = result.getString("ROLE.id");
+                String roleLabel = result.getString("ROLE.label");
+
+                Role role = new Role(roleId, roleLabel);
+                User user = new User(id, firstname, lastname, email, password, role);
+                users.add(user);
+            }
+            result.close();
+            statement.close();
+
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     @Override
     public User find(String id) {
         try {

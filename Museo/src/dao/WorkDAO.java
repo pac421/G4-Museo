@@ -6,8 +6,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class WorkDAO extends DAO<Work>{
+
+    @Override
+    public ArrayList<Work> findAll() {
+        return null;
+    }
 
     @Override
     public Work find(String id) {

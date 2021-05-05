@@ -6,8 +6,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class LendDAO extends DAO<Lend> {
+    @Override
+    public ArrayList<Lend> findAll() {
+        return null;
+    }
+
     @Override
     public Lend find(String id) {
         try {

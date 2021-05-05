@@ -1,13 +1,39 @@
 package dao;
 
-import bean.Role;
 import bean.State;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public class StateDAO extends DAO<State> {
+    @Override
+    public ArrayList<State> findAll() {
+        try {
+            String sql = "SELECT * FROM STATE";
+            Statement statement = connect.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+
+            ArrayList<State> states = new ArrayList<>();
+            while (result.next()) {
+                String id = result.getString("id");
+                String label = result.getString("label");
+                State state = new State(id, label);
+                states.add(state);
+            }
+            result.close();
+            statement.close();
+
+            return states;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     @Override
     public State find(String id) {
         try {

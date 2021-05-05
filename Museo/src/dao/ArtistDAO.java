@@ -5,8 +5,37 @@ import bean.Artist;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public class ArtistDAO extends DAO<Artist> {
+    @Override
+    public ArrayList<Artist> findAll() {
+        try {
+            String sql = "SELECT * FROM ARTIST";
+            Statement statement = connect.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+
+            ArrayList<Artist> artists = new ArrayList<>();
+            while (result.next()) {
+                String id = result.getString("id");
+                String firstname = result.getString("firstname");
+                String lastname = result.getString("lastname");
+                String period = result.getString("period");
+                Artist artist = new Artist(id, firstname, lastname, period);
+                artists.add(artist);
+            }
+            result.close();
+            statement.close();
+
+            return artists;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     @Override
     public Artist find(String id) {
         try {

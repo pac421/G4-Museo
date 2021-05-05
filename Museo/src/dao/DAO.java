@@ -1,12 +1,19 @@
 package dao;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 public abstract class DAO<T> {
     public Connection connect = MysqlConnect.connect();
 
     /**
-     * Get an object by ID from DB
+     * Get all objects from DB
+     * @return
+     */
+    public abstract ArrayList<T> findAll();
+
+    /**
+     * Get one object by ID from DB
      * @param id
      * @return
      */
