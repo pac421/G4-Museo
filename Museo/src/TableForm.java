@@ -50,9 +50,11 @@ public class TableForm extends JFrame {
         JTable table = new JTable(model);
         this.add(new JScrollPane(table));
 
-        this.setTitle("Liste des oeuvres");
+        this.setTitle("Museo - Liste des œuvres");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
+        this.setSize(1400, 600);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 

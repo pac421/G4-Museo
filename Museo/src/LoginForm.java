@@ -17,8 +17,11 @@ public class LoginForm {
     public static void main(String[] args) {
         frame = new JFrame("LoginForm");
         frame.setContentPane(new LoginForm().panel1);
+        frame.setTitle("Museo - Connexion");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setSize(320, 220);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
