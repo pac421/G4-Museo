@@ -8,19 +8,20 @@ import java.sql.SQLException;
 
 public class LoginForm {
     private static JFrame frame;
-    private JPanel panel1;
+    private JPanel panel;
     private JLabel errorLabel;
     private JTextField emailField;
     private JPasswordField passwordField;
     private JButton connexionButton;
+    private JCheckBox maintenirLaConnexionSurCheckBox;
 
     public static void main(String[] args) {
         frame = new JFrame("LoginForm");
-        frame.setContentPane(new LoginForm().panel1);
+        frame.setContentPane(new LoginForm().panel);
         frame.setTitle("Museo - Connexion");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setSize(320, 220);
+        frame.setSize(340, 400);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }

@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
 public class TableForm extends JFrame {
+
     public TableForm() {
         String[] columns = new String[] {
                 //"Titre", "Description", "Période", "Hauteur", "Largeur", "Profondeur", "Poids", "Catégorie", "Artistes", "Collection", "Date d'acquisition", "Nom du vendeur/donneur", "Prix"
