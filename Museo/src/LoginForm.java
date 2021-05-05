@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginForm {
+    private static JFrame frame;
     private JPanel panel1;
     private JLabel errorLabel;
     private JTextField emailField;
@@ -14,7 +15,7 @@ public class LoginForm {
     private JButton connexionButton;
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("LoginForm");
+        frame = new JFrame("LoginForm");
         frame.setContentPane(new LoginForm().panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -43,8 +44,9 @@ public class LoginForm {
                         if(result.next()) {
                             String hashed_password = result.getString("password");
                             if(hashed_password.equals(password)) {
-                                errorLabel.setText("Connecté !");
-                                // open new form here
+                                new TableForm();
+                                frame.setVisible(false);
+                                frame.dispose();
                             } else {
                                 errorLabel.setText("Mot de passe invalide");
                             }
