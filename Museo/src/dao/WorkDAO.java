@@ -132,4 +132,35 @@ public class WorkDAO extends DAO<Work>{
     public void delete(Work work) {
 
     }
+
+    public ArrayList<Picture> findAllPictures(Work work) {
+        try {
+            String sql = "SELECT * FROM PICTURE WHERE work_id = ?";
+            PreparedStatement statement = connect.prepareStatement(sql);
+            statement.setString(1, work.getId());
+            ResultSet result = statement.executeQuery();
+
+            ArrayList<Picture> pictures = new ArrayList<Picture>();
+
+            while (result.next()) {
+                String id = result.getString("id");
+                String extension = result.getString("extension");
+                String work_id = result.getString("work_id");
+
+                DAO<Work> workDAO = new DAOFactory().getWorkDAO();
+                Work work_obj = workDAO.find(work_id);
+
+                Picture picture = new Picture(id, extension, work_obj);
+                pictures.add(picture);
+            }
+
+            result.close();
+            statement.close();
+
+            return pictures;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
