@@ -102,16 +102,17 @@ CREATE TABLE `PROPERTY_STATE`
 
 CREATE TABLE `ARTIST_WORK`
 (
-	artist_id VARCHAR(36)  NOT NULL,
-	work_id    VARCHAR(36)  NOT NULL,
-    PRIMARY KEY (artist_id, work_id)
+	artist_id VARCHAR(36) NOT NULL,
+	work_id   VARCHAR(36) NOT NULL,
+	PRIMARY KEY (artist_id, work_id)
 );
 
 INSERT INTO `ROLE` VALUES
 ('8f818b53-969b-4cd9-8159-6ddce75e5710', 'Superadmin');
 
 INSERT INTO `USER` VALUES
-('dba28fa8-6d58-4f5a-b158-eeadddbb1ea4', 'Michel', 'TESTEUR', 'michel.testeur@mail.com', 'test123', '8f818b53-969b-4cd9-8159-6ddce75e5710');
+('dba28fa8-6d58-4f5a-b158-eeadddbb1ea4', 'Michel', 'TESTEUR', 'michel.testeur@mail.com', 'test123', '8f818b53-969b-4cd9-8159-6ddce75e5710'),
+('dba28fa8-6d58-4f5a-b158-eeadddbb1ea8', 'test', 'test', 'test', 'test', '8f818b53-969b-4cd9-8159-6ddce75e5710');
 
 ALTER TABLE `WORK`
 ADD FOREIGN KEY (category_id)   REFERENCES `CATEGORY`(id),
@@ -136,5 +137,5 @@ ADD FOREIGN KEY (state_id)    REFERENCES `STATE`(id);
 
 ALTER TABLE `ARTIST_WORK`
 ADD FOREIGN KEY (artist_id) REFERENCES `ARTIST`(id),
-ADD FOREIGN KEY (work_id)    REFERENCES `WORK`(id);
+ADD FOREIGN KEY (work_id)   REFERENCES `WORK`(id);
 
