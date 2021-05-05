@@ -1,52 +1,62 @@
+import bean.Work;
+import dao.DAO;
+import dao.DAOFactory;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
-public class TableForm extends JFrame
-{
-    public TableForm()
-    {
-        //headers for the table
+public class TableForm extends JFrame {
+    public TableForm() {
         String[] columns = new String[] {
-                "Id", "Name", "Hourly Rate", "Part Time"
+                //"Titre", "Description", "Période", "Hauteur", "Largeur", "Profondeur", "Poids", "Catégorie", "Artistes", "Collection", "Date d'acquisition", "Nom du vendeur/donneur", "Prix"
+                "Titre", "Description", "Période", "Hauteur (cm)", "Largeur (cm)", "Profondeur (cm)", "Poids (kg)", "Catégorie", "Collection"
         };
 
-        //actual data for the table in a 2d array
-        Object[][] data = new Object[][] {
-                {1, "John", 40.0, false },
-                {2, "Rambo", 70.0, false },
-                {3, "Zorro", 60.0, true },
-        };
+        DAO<Work> workDAO = new DAOFactory().getWorkDAO();
+        ArrayList<Work> works = workDAO.findAll();
+        int works_length = works.size();
+
+        Object[][] data = new Object[works_length][];
+        for (int i = 0; i < works_length; i++) {
+            data[i] = new Object[]{
+                    works.get(i).getLabel(),
+                    works.get(i).getDescription(),
+                    works.get(i).getPeriod(),
+                    works.get(i).getHeight(),
+                    works.get(i).getWidth(),
+                    works.get(i).getDepth(),
+                    works.get(i).getWeight(),
+                    works.get(i).getCategory().getLabel(),
+                    works.get(i).getCollection().getLabel(),
+            };
+        }
 
         final Class[] columnClass = new Class[] {
-                Integer.class, String.class, Double.class, Boolean.class
+                String.class, String.class, String.class, String.class, Double.class, Double.class, Double.class, String.class, String.class
         };
-        //create table model with data
+
         DefaultTableModel model = new DefaultTableModel(data, columns) {
             @Override
-            public boolean isCellEditable(int row, int column)
-            {
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
             @Override
-            public Class<?> getColumnClass(int columnIndex)
-            {
+            public Class<?> getColumnClass(int columnIndex) {
                 return columnClass[columnIndex];
             }
         };
 
         JTable table = new JTable(model);
-
-        //add the table to the frame
         this.add(new JScrollPane(table));
 
-        this.setTitle("Table Example");
+        this.setTitle("Liste des oeuvres");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

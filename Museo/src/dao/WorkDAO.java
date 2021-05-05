@@ -12,6 +12,54 @@ public class WorkDAO extends DAO<Work>{
 
     @Override
     public ArrayList<Work> findAll() {
+        try {
+            String sql = "SELECT * FROM WORK W" +
+                    " INNER JOIN COLLECTION CO ON W.collection_id = CO.id" +
+                    " INNER JOIN CATEGORY CA ON W.category_id = CA.id" +
+                    " LEFT JOIN USER U ON W.deleted_by_id = U.id" +
+                    " WHERE W.deleted_at IS NULL";
+
+            PreparedStatement statement = connect.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+
+            ArrayList<Work> works = new ArrayList<Work>();
+
+            while (result.next()) {
+                String id = result.getString("W.id");
+                String label = result.getString("W.label");
+                String description = result.getString("W.description");
+                String period = result.getString("W.period");
+                Double height = result.getDouble("W.height");
+                Double width = result.getDouble("W.width");
+                Double depth = result.getDouble("W.depth");
+                Double weight = result.getDouble("W.weight");
+                Date deletedAt = result.getDate("W.deleted_at");
+                String userId = result.getString("W.deleted_by_id");
+                String collectionId = result.getString("W.collection_id");
+                String collectionLabel = result.getString("CO.label");
+                String collectionPeriod = result.getString("CO.period");
+                String categoryId = result.getString("W.category_id");
+                String categoryLabel = result.getString("CA.label");
+
+                User deletedBy = new User();
+                if (userId != null) {
+                    deletedBy.setFirstname(result.getString("U.firstname"));
+                    deletedBy.setLastname(result.getString("U.lastname"));
+                    deletedBy.setEmail(result.getString("U.email"));
+                }
+                Collection collection = new Collection(collectionId, collectionLabel, collectionPeriod);
+                Category category = new Category(categoryId, categoryLabel);
+
+                Work work = new Work(id, label, description, period, height, width, depth, weight, deletedAt, deletedBy, collection, category);
+                works.add(work);
+            }
+            result.close();
+            statement.close();
+
+            return works;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
