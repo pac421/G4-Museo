@@ -48,7 +48,7 @@ public class LoginForm {
                         if(result.next()) {
                             String hashed_password = result.getString("password");
                             if(hashed_password.equals(password)) {
-                                new TableForm();
+                                new MainFrame();
                                 frame.setVisible(false);
                                 frame.dispose();
                             } else {

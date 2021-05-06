@@ -4,11 +4,12 @@ import dao.DAOFactory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.ArrayList;
 
-public class TableForm extends JFrame {
+public class WorkPanel extends JPanel {
 
-    public TableForm() {
+    public WorkPanel() {
         String[] columns = new String[] {
                 //"Titre", "Description", "Période", "Hauteur", "Largeur", "Profondeur", "Poids", "Catégorie", "Artistes", "Collection", "Date d'acquisition", "Nom du vendeur/donneur", "Prix"
                 "Titre", "Description", "Période", "Hauteur (cm)", "Largeur (cm)", "Profondeur (cm)", "Poids (kg)", "Catégorie", "Collection"
@@ -34,7 +35,7 @@ public class TableForm extends JFrame {
         }
 
         final Class[] columnClass = new Class[] {
-                String.class, String.class, String.class, String.class, Double.class, Double.class, Double.class, String.class, String.class
+                String.class, String.class, String.class, Double.class, Double.class, Double.class, Double.class, String.class, String.class
         };
 
         DefaultTableModel model = new DefaultTableModel(data, columns) {
@@ -50,21 +51,6 @@ public class TableForm extends JFrame {
 
         JTable table = new JTable(model);
         this.add(new JScrollPane(table));
-
-        this.setTitle("Museo - Liste des œuvres");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.pack();
-        this.setSize(1400, 600);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new TableForm();
-            }
-        });
+        this.setLayout(new GridLayout(0, 1));
     }
 }
