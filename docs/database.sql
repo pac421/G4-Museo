@@ -92,12 +92,13 @@ CREATE TABLE `STATE`
 
 CREATE TABLE `PROPERTY_STATE`
 (
-	property_id VARCHAR(36)  NOT NULL,
-	state_id    VARCHAR(36)  NOT NULL,
+	id          VARCHAR(36)  NOT NULL,
 	start       DATETIME     NOT NULL,
 	end         DATETIME     NOT NULL,
 	comment     VARCHAR(255) NOT NULL,
-    PRIMARY KEY (property_id, state_id)
+	property_id VARCHAR(36)  NOT NULL,
+	state_id    VARCHAR(36)  NOT NULL,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE `ARTIST_WORK`
