@@ -36,4 +36,8 @@ public abstract class DAO<T> {
      * @param obj
      */
     public abstract void delete(T obj);
+
+    public String addFilters(String sql) {
+        return sql;
+    }
 }

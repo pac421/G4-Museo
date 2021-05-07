@@ -1,22 +1,43 @@
 package bean;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.UUID;
 
 public class PropertyState {
     private Property property;
     private State state;
     private Date start, end;
-    private String comment;
+    private String id, comment;
 
     public PropertyState() {
     }
 
+    /*
+     * Constructor for creating an ArtistWork that does not exists yet in DB
+     */
     public PropertyState(Property property, State state, Date start, Date end, String comment) {
+        this.id = UUID.randomUUID().toString();
         this.property = property;
         this.state = state;
         this.start = start;
         this.end = end;
         this.comment = comment;
+    }
+
+    /*
+     * Constructor for ArtistWorkDAO
+     */
+    public PropertyState(String id, Property property, State state, Date start, Date end, String comment) {
+        this.id = id;
+        this.property = property;
+        this.state = state;
+        this.start = start;
+        this.end = end;
+        this.comment = comment;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public Property getProperty() {

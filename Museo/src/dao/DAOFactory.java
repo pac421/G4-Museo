@@ -39,5 +39,13 @@ public class DAOFactory {
     public static DAO<Lend> getLendDAO(){
         return new LendDAO();
     }
+
+    public static DAO<ArtistWork> getArtistWorkDAO(){
+        return new ArtistWorkDAO();
+    }
+
+    public static DAO<PropertyState> getPropertyStateDAO(){
+        return new PropertyStateDAO();
+    }
 }
 

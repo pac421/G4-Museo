@@ -164,36 +164,4 @@ public class PropertyDAO extends DAO<Property> {
     public void delete(Property property) {
 
     }
-
-    public ArrayList<PropertyState> findAllStates(Property property) {
-        try {
-            String sql = "SELECT * FROM PROPERTY_STATE PS INNER JOIN STATE S ON PS.state_id = S.id WHERE PS.property_id = ?";
-            PreparedStatement statement = connect.prepareStatement(sql);
-            statement.setString(1, property.getId());
-            ResultSet result = statement.executeQuery();
-
-            ArrayList<PropertyState> propertyStates = new ArrayList<PropertyState>();
-
-            while (result.next()) {
-                Date start = result.getDate("start");
-                Date end = result.getDate("end");
-                String comment = result.getString("comment");
-                String state_id = result.getString("state_id");
-
-                DAO<State> stateDAO = new DAOFactory().getStateDAO();
-                State state_obj = stateDAO.find(state_id);
-
-                PropertyState propertyState = new PropertyState(property, state_obj, start, end, comment);
-                propertyStates.add(propertyState);
-            }
-
-            result.close();
-            statement.close();
-
-            return propertyStates;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }
