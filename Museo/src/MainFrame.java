@@ -7,9 +7,9 @@ public class MainFrame extends JFrame {
 
         JPanel workPanel, artistPanel, categoryPanel, collectionPanel, userPanel;
         workPanel = new WorkPanel();
-        artistPanel = new JPanel();
-        categoryPanel = new JPanel();
-        collectionPanel = new JPanel();
+        artistPanel = new ArtistPanel();
+        categoryPanel = new CategoryPanel();
+        collectionPanel = new CollectionPanel();
         userPanel = new JPanel();
 
         tabbedPane.addTab("Œuvres", workPanel);

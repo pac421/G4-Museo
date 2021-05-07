@@ -1,9 +1,11 @@
 package bean;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Artist {
     private String id, firstname, lastname, period;
+    private ArrayList<? extends Work> works;
 
     public Artist() {
     }
