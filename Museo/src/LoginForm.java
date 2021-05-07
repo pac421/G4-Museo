@@ -9,6 +9,7 @@ import java.sql.SQLException;
 public class LoginForm {
     private static JFrame frame;
     private JPanel panel;
+    private JButton closeButton;
     private JLabel errorLabel;
     private JTextField emailField;
     private JPasswordField passwordField;
@@ -19,6 +20,7 @@ public class LoginForm {
         frame = new JFrame("LoginForm");
         frame.setContentPane(new LoginForm().panel);
         frame.setTitle("Museo - Connexion");
+        frame.setUndecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setSize(340, 400);
@@ -27,6 +29,14 @@ public class LoginForm {
     }
 
     public LoginForm() {
+        closeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                frame.setVisible(false);
+                frame.dispose();
+            }
+        });
+
         connexionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
