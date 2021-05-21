@@ -7,11 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PropertyDAO extends DAO<Property> {
 
     @Override
-    public ArrayList<Property> findAll() {
+    public ArrayList<Property> findAll(HashMap<String, String> filters) {
         return null;
     }
 

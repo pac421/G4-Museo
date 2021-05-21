@@ -7,11 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class WorkDAO extends DAO<Work>{
 
     @Override
-    public ArrayList<Work> findAll() {
+    public ArrayList<Work> findAll(HashMap<String, String> filters) {
         try {
             String sql = "SELECT * FROM WORK W" +
                     " INNER JOIN COLLECTION CO ON W.collection_id = CO.id" +

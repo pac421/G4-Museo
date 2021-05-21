@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CollectionPanel extends JPanel {
     public CollectionPanel() {
@@ -14,7 +15,7 @@ public class CollectionPanel extends JPanel {
         };
 
         DAO<Collection> collectionDAO = new DAOFactory().getCollectionDAO();
-        ArrayList<Collection> collections = collectionDAO.findAll();
+        ArrayList<Collection> collections = collectionDAO.findAll(new HashMap<>());
         int collectionsLength = collections.size();
 
         Object[][] data = new Object[collectionsLength][];

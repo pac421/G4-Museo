@@ -10,10 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RoleDAO extends DAO<Role> {
     @Override
-    public ArrayList<Role> findAll() {
+    public ArrayList<Role> findAll(HashMap<String, String> filters) {
         try {
             String sql = "SELECT * FROM ROLE";
             Statement statement = connect.createStatement();

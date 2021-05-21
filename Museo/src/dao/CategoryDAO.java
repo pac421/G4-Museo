@@ -7,10 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CategoryDAO extends DAO<Category> {
     @Override
-    public ArrayList<Category> findAll() {
+    public ArrayList<Category> findAll(HashMap<String, String> filters) {
         try {
             String sql = "SELECT * FROM CATEGORY";
             Statement statement = connect.createStatement();

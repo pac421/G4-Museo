@@ -6,10 +6,11 @@ import bean.State;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class StateDAO extends DAO<State> {
     @Override
-    public ArrayList<State> findAll() {
+    public ArrayList<State> findAll(HashMap<String, String> filters) {
         try {
             String sql = "SELECT * FROM STATE";
             Statement statement = connect.createStatement();

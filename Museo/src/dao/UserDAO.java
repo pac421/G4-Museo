@@ -8,10 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UserDAO extends DAO<User> {
     @Override
-    public ArrayList<User> findAll() {
+    public ArrayList<User> findAll(HashMap<String, String> filters) {
         try {
             String sql = "SELECT * FROM USER" +
                     " LEFT JOIN ROLE ON USER.role_id = ROLE.id";

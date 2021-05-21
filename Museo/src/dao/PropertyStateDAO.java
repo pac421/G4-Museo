@@ -4,12 +4,14 @@ import bean.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PropertyStateDAO extends DAO<PropertyState> {
     @Override
-    public ArrayList<PropertyState> findAll() {
+    public ArrayList<PropertyState> findAll(HashMap<String, String> filters) {
         try {
             String sql = "SELECT * FROM PROPERTY_STATE";
+
             Statement statement = connect.createStatement();
             ResultSet result = statement.executeQuery(sql);
 

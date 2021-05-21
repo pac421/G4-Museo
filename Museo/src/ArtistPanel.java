@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ArtistPanel extends JPanel {
     public ArtistPanel() {
@@ -14,7 +15,7 @@ public class ArtistPanel extends JPanel {
         };
 
         DAO<Artist> artistDAO = new DAOFactory().getArtistDAO();
-        ArrayList<Artist> artists = artistDAO.findAll();
+        ArrayList<Artist> artists = artistDAO.findAll(new HashMap<>());
         int artistsLength = artists.size();
 
         Object[][] data = new Object[artistsLength][];

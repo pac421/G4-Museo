@@ -7,10 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LendDAO extends DAO<Lend> {
     @Override
-    public ArrayList<Lend> findAll() {
+    public ArrayList<Lend> findAll(HashMap<String, String> filters) {
         return null;
     }
 

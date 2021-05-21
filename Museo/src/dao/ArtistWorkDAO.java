@@ -4,12 +4,15 @@ import bean.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ArtistWorkDAO extends DAO<ArtistWork> {
     @Override
-    public ArrayList<ArtistWork> findAll() {
+    public ArrayList<ArtistWork> findAll(HashMap<String, String> filters) {
         try {
             String sql = "SELECT * FROM ARTIST_WORK";
+            sql = addFilters(sql, filters);
+
             Statement statement = connect.createStatement();
             ResultSet result = statement.executeQuery(sql);
 

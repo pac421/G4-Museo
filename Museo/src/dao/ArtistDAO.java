@@ -7,10 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ArtistDAO extends DAO<Artist> {
     @Override
-    public ArrayList<Artist> findAll() {
+    public ArrayList<Artist> findAll(HashMap<String, String> filters) {
         try {
             String sql = "SELECT * FROM ARTIST";
             Statement statement = connect.createStatement();

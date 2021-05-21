@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UserPanel extends JPanel {
 
@@ -17,7 +18,7 @@ public class UserPanel extends JPanel {
         };
 
         DAO<User> userDAO = new DAOFactory().getUserDAO();
-        ArrayList<User> user = userDAO.findAll();
+        ArrayList<User> user = userDAO.findAll(new HashMap<>());
         int user_length = user.size();
 
         Object[][] data = new Object[user_length][];
