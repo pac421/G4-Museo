@@ -48,7 +48,6 @@ public abstract class DAO<T> {
             }
             sql = sqlBuilder.toString();
         }
-        System.out.println("sql with filters : "+sql);
         return sql;
     }
 }
