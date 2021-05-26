@@ -4,7 +4,6 @@ import bean.Property;
 import bean.Work;
 import dao.DAO;
 import dao.DAOFactory;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -16,29 +15,28 @@ public class WorkPanel extends JPanel {
 
     public WorkPanel() {
         String[] columns = new String[] {
-                "Titre", "Description", "Période", "Hauteur (cm)", "Largeur (cm)", "Profondeur (cm)", "Poids (kg)", "Catégorie", "Collection", "Artistes", "Statut", "Date d'acquisition", "Date de rente", "Nom du cessionnaire", "Prix (€)"
+                "ID", "Titre", "Description", "Période", "Hauteur (cm)", "Largeur (cm)", "Profondeur (cm)", "Poids (kg)", "Catégorie", "Collection", "Artistes", "Statut", "Date d'acquisition", "Date de rente", "Nom du cessionnaire", "Prix (€)"
         };
 
         DAO<Work> workDAO = new DAOFactory().getWorkDAO();
-        ArrayList<Work> works = workDAO.findAll(new HashMap<>());
-        int works_length = works.size();
-
         DAO<ArtistWork> artistWorkDAO = new DAOFactory().getArtistWorkDAO();
         DAO<Property> propertyDAO = new DAOFactory().getPropertyDAO();
         DAO<Lend> lendDAO = new DAOFactory().getLendDAO();
+
+        ArrayList<Work> works = workDAO.findAll(new HashMap<>());
+        int works_length = works.size();
 
         Object[][] data = new Object[works_length][];
         for (int i = 0; i < works_length; i++) {
 
             HashMap<String, String> filters = new HashMap<>();
             filters.put("work_id", works.get(i).getId());
-
             ArrayList<ArtistWork> artistWorks = artistWorkDAO.findAll(filters);
 
             int j = 1;
             StringBuilder artistsStr = new StringBuilder();
             for(ArtistWork artistWork : artistWorks) {
-                artistsStr.append(artistWork.getArtist().getFirstname()+" "+artistWork.getArtist().getLastname());
+                artistsStr.append(artistWork.getArtist().getFirstname()).append(" ").append(artistWork.getArtist().getLastname());
                 if(j < artistWorks.size()) {
                     artistsStr.append(", ");
                 }
@@ -48,9 +46,8 @@ public class WorkPanel extends JPanel {
             Property property = propertyDAO.find(works.get(i).getId());
             Lend lend = lendDAO.find(works.get(i).getId());
 
-
-
             data[i] = new Object[]{
+                    works.get(i).getId(),
                     works.get(i).getLabel(),
                     works.get(i).getDescription(),
                     works.get(i).getPeriod(),
@@ -70,7 +67,7 @@ public class WorkPanel extends JPanel {
         }
 
         final Class[] columnClass = new Class[] {
-                String.class, String.class, String.class, Double.class, Double.class, Double.class, Double.class, String.class, String.class, String.class, String.class, Date.class, Date.class, String.class, Double.class
+                String.class, String.class, String.class, String.class, Double.class, Double.class, Double.class, Double.class, String.class, String.class, String.class, String.class, Date.class, Date.class, String.class, Double.class
         };
 
         DefaultTableModel model = new DefaultTableModel(data, columns) {
@@ -85,7 +82,17 @@ public class WorkPanel extends JPanel {
         };
 
         JTable table = new JTable(model);
+        table.removeColumn(table.getColumn("ID"));
+
+        table.getSelectionModel().addListSelectionListener(event -> {
+            if (!event.getValueIsAdjusting() && table.getSelectedRow() != -1){
+                String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+                System.out.println("selected work with id : "+id);
+            }
+        });
+
+        this.setLayout(new GridLayout(2, 1));
         this.add(new JScrollPane(table));
-        this.setLayout(new GridLayout(0, 1));
+        this.add(new WorkForm());
     }
 }

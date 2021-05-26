@@ -1,6 +1,5 @@
 import dao.MysqlConnect;
 import javax.swing.*;
-import java.awt.*;
 
 public class LoginFrame extends JFrame {
 
@@ -46,11 +45,6 @@ public class LoginFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new LoginFrame();
-            }
-        });
+        SwingUtilities.invokeLater(LoginFrame::new);
     }
 }
