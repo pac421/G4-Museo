@@ -14,22 +14,21 @@ public class EntryPoint {
             if(lines.size() != 2) {
                 System.out.println("Credential file doesn't have two lines, starting login frame..");
                 new LoginFrame();
-            }
-
-            String email = lines.get(0);
-            String password = lines.get(1);
-            String response = MysqlConnect.tryAuthentication(email, password, true);
-
-            if(response.equals("success")) {
-                System.out.println("Credential file authentication success, starting main frame..");
-                new MainFrame();
             } else {
-                System.out.println("Credential file return error : "+response);
-                new LoginFrame();
-            }
+                String email = lines.get(0);
+                String password = lines.get(1);
+                String response = MysqlConnect.tryAuthentication(email, password, true);
 
+                if(response.equals("success")) {
+                    System.out.println("Credential file authentication success, starting main frame..");
+                    new MainFrame();
+                } else {
+                    System.out.println("Credential file return error : "+response);
+                    new LoginFrame();
+                }
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("No credential file found. Displaying login form..");
             new LoginFrame();
         }
     }
