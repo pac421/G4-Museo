@@ -1,5 +1,6 @@
 import bean.Category;
 import bean.Collection;
+import bean.Work;
 import dao.DAO;
 import dao.DAOFactory;
 
@@ -10,7 +11,7 @@ import java.util.HashMap;
 
 public class WorkForm extends JPanel {
 
-    public WorkForm() {
+    public WorkForm(JTable table, JButton del_btn, JButton clear_btn) {
         JLabel titleLabel = new JLabel("Titre");
         JTextField titleField = new JTextField(20);
 
@@ -49,8 +50,6 @@ public class WorkForm extends JPanel {
         }
 
         this.setBorder(BorderFactory.createTitledBorder("Ajouter une oeuvre"));
-
-
 
         GroupLayout groupLayout = new GroupLayout(this);
         this.setLayout(groupLayout);
@@ -94,6 +93,46 @@ public class WorkForm extends JPanel {
         verticalGroup.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(categoryLabel).addComponent(categoryList));
         verticalGroup.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(collectionLabel).addComponent(collectionList));
         groupLayout.setVerticalGroup(verticalGroup);
+
+        DAO<Work> workDAO = new DAOFactory().getWorkDAO();
+
+        table.getSelectionModel().addListSelectionListener(event -> {
+            if (!event.getValueIsAdjusting() && table.getSelectedRow() != -1){
+                String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+                System.out.println("new selected_item_id : "+id);
+
+                del_btn.setVisible(true);
+                clear_btn.setVisible(true);
+
+                Work work = workDAO.find(id);
+                titleField.setText(work.getLabel());
+                descriptionField.setText(work.getDescription());
+                periodField.setText(work.getPeriod());
+                heightField.setText(String.valueOf(work.getHeight()));
+                widthField.setText(String.valueOf(work.getWidth()));
+                depthField.setText(String.valueOf(work.getDepth()));
+                weightField.setText(String.valueOf(work.getWeight()));
+                categoryList.setSelectedItem(work.getCategory());
+                collectionList.setSelectedItem(work.getCollection());
+            }
+        });
+
+        clear_btn.addActionListener(e -> {
+            System.out.println("clear selection");
+
+            del_btn.setVisible(false);
+            clear_btn.setVisible(false);
+
+            titleField.setText("");
+            descriptionField.setText("");
+            periodField.setText("");
+            heightField.setText("");
+            widthField.setText("");
+            depthField.setText("");
+            weightField.setText("");
+            categoryList.setSelectedItem("");
+            collectionList.setSelectedItem("");
+        });
     }
 
     static class ItemRenderer extends BasicComboBoxRenderer {

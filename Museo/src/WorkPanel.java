@@ -84,15 +84,20 @@ public class WorkPanel extends JPanel {
         JTable table = new JTable(model);
         table.removeColumn(table.getColumn("ID"));
 
-        table.getSelectionModel().addListSelectionListener(event -> {
-            if (!event.getValueIsAdjusting() && table.getSelectedRow() != -1){
-                String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
-                System.out.println("selected work with id : "+id);
-            }
-        });
+        JButton add_edit_btn = new JButton("Ajouter");
+        JButton del_btn = new JButton("Supprimer");
+        JButton clear_btn = new JButton("Effacer la sélection");
+        del_btn.setVisible(false);
+        clear_btn.setVisible(false);
 
-        this.setLayout(new GridLayout(2, 1));
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(add_edit_btn);
+        buttonPanel.add(del_btn);
+        buttonPanel.add(clear_btn);
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(new JScrollPane(table));
-        this.add(new WorkForm());
+        this.add(new WorkForm(table, del_btn, clear_btn));
+        this.add(buttonPanel);
     }
 }
