@@ -14,6 +14,7 @@ public class WorkForm extends JPanel {
 
     public WorkForm(JTable table, JButton add_btn, JButton edit_btn, JButton del_btn, JButton clear_btn) {
         this.setBorder(new EmptyBorder(20, 0, 0, 0));
+        this.setBackground(Color.decode("#C2EAFF"));
 
         Font labelFont = new Font("Montserrat", Font.PLAIN, 16);
         Font fieldFont = new Font("Montserrat", Font.PLAIN, 14);
@@ -55,8 +56,10 @@ public class WorkForm extends JPanel {
 
         JComboBox<Object> categoryList = new JComboBox<>();
         categoryList.setFont(fieldFont);
+
         DAO<Category> categoryDAO = new DAOFactory().getCategoryDAO();
         ArrayList<Category> categories = categoryDAO.findAll(new HashMap<>());
+
         JLabel categoryLabel = new JLabel("Catégorie");
         categoryLabel.setFont(labelFont);
         for (Category category : categories) {
@@ -66,8 +69,10 @@ public class WorkForm extends JPanel {
 
         JComboBox<Object> collectionList = new JComboBox<>();
         collectionList.setFont(fieldFont);
+
         DAO<Collection> collectionDAO = new DAOFactory().getCollectionDAO();
         ArrayList<Collection> collections = collectionDAO.findAll(new HashMap<>());
+
         JLabel collectionLabel = new JLabel("Collection");
         collectionLabel.setFont(labelFont);
         for (Collection collection : collections) {
@@ -161,8 +166,6 @@ public class WorkForm extends JPanel {
             categoryList.getModel().setSelectedItem("");
             collectionList.getModel().setSelectedItem("");
         });
-
-        this.setBackground(Color.decode("#C2EAFF"));
     }
 
     static class ItemRenderer extends BasicComboBoxRenderer {
