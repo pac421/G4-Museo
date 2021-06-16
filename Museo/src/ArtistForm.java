@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 
 public class ArtistForm extends JPanel {
 
@@ -77,5 +78,21 @@ public class ArtistForm extends JPanel {
             nameField.setText("");
             periodField.setText("");
         });
-    }
+
+        del_btn.addActionListener(e -> {
+            String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+            System.out.println("delete selected_item_id : " + id);
+            Artist artist = artistDAO.find(id);
+
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog (null, "Voulez-vous supprimer la ligne séléctionnée ?","Confirmer la suppression",dialogButton);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                artistDAO.delete(artist);
+                table.revalidate();
+                del_btn.setVisible(false);
+                clear_btn.setVisible(false);
+            }
+
+        });
+        }
 }
