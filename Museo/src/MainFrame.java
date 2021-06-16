@@ -1,9 +1,13 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 
 public class MainFrame extends JFrame {
 
     public MainFrame() {
+        UIManager.put("TabbedPane.selected", Color.decode("#0081CC"));
         JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.setBorder(new LineBorder(Color.white, 0, true));
 
         JPanel workPanel, artistPanel, categoryPanel, collectionPanel, userPanel;
         workPanel = new WorkPanel();
@@ -17,6 +21,10 @@ public class MainFrame extends JFrame {
         tabbedPane.addTab("Catégories", categoryPanel);
         tabbedPane.addTab("Collections", collectionPanel);
         tabbedPane.addTab("Utilisateurs", userPanel);
+
+        tabbedPane.setBackground(Color.decode("#38B6FF"));
+        tabbedPane.setForeground(Color.white);
+        tabbedPane.setFont(new Font("Montserrat", Font.BOLD, 22));
 
         this.add(tabbedPane);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

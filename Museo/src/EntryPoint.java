@@ -1,4 +1,7 @@
 import dao.MysqlConnect;
+
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -21,13 +24,17 @@ public class EntryPoint {
 
                 if(response.equals("success")) {
                     System.out.println("Credential file authentication success, starting main frame..");
+
+                    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                    ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("resources/montserrat_regular_400.ttf")));
+
                     new MainFrame();
                 } else {
                     System.out.println("Credential file return error : "+response);
                     new LoginFrame();
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | FontFormatException e) {
             System.out.println("No credential file found. Displaying login form..");
             new LoginFrame();
         }

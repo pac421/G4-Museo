@@ -40,6 +40,7 @@ public class LoginFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setSize(340,180);
+        this.setUndecorated(true);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
