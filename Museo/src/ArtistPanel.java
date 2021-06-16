@@ -20,7 +20,7 @@ public class ArtistPanel extends JPanel {
         this.setBorder(new EmptyBorder(20, 20, 20, 20));
         this.setBackground(Color.white);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
+
         String[] columns = new String[] {
                "ID", "Prénom", "Nom", "Dates"
         };

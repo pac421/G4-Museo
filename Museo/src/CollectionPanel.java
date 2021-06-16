@@ -1,8 +1,11 @@
 import bean.Collection;
+import customUI.ForcedListSelectionModel;
 import dao.DAO;
 import dao.DAOFactory;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,6 +13,11 @@ import java.util.HashMap;
 
 public class CollectionPanel extends JPanel {
     public CollectionPanel() {
+
+        this.setBorder(new EmptyBorder(20, 20, 20, 20));
+        this.setBackground(Color.white);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
         String[] columns = new String[] {
                 "ID", "Label", "Période"
         };
@@ -44,21 +52,74 @@ public class CollectionPanel extends JPanel {
 
         JTable table = new JTable(model);
         table.removeColumn(table.getColumn("ID"));
+        table.setSelectionBackground(Color.decode("#FFEFAD"));
+        table.setSelectionModel(new ForcedListSelectionModel());
+        table.setFont(new Font("Montserrat", Font.PLAIN, 14));
+        table.setBorder(new LineBorder(Color.black, 1, false));
+        table.getTableHeader().setOpaque(false);
+        table.getTableHeader().setBackground(Color.decode("#FFDE59"));
+        table.getTableHeader().setFont(new Font("Montserrat", Font.PLAIN, 16));
+        table.getTableHeader().setBorder(new LineBorder(Color.black, 2, false));
+        table.getTableHeader().setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.black, 1),
+                BorderFactory.createLineBorder(Color.decode("#FFDE59"), 2))
+        );
 
-        JButton add_edit_btn = new JButton("Ajouter");
+        JButton add_btn = new JButton("Ajouter");
+        add_btn.setForeground(Color.white);
+        add_btn.setBackground(Color.decode("#38B6FF"));
+        add_btn.setFont(new Font("Montserrat", Font.BOLD, 20));
+        add_btn.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.decode("#0081CC"), 2),
+                BorderFactory.createLineBorder(Color.decode("#38B6FF"), 15))
+        );
+
+        JButton edit_btn = new JButton("Éditer");
+        edit_btn.setForeground(Color.white);
+        edit_btn.setBackground(Color.decode("#38B6FF"));
+        edit_btn.setFont(new Font("Montserrat", Font.BOLD, 20));
+        edit_btn.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.decode("#0081CC"), 2),
+                BorderFactory.createLineBorder(Color.decode("#38B6FF"), 15))
+        );
+        edit_btn.setVisible(false);
+
         JButton del_btn = new JButton("Supprimer");
+        del_btn.setForeground(Color.white);
+        del_btn.setBackground(Color.decode("#38B6FF"));
+        del_btn.setFont(new Font("Montserrat", Font.BOLD, 20));
+        del_btn.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.decode("#0081CC"), 2),
+                BorderFactory.createLineBorder(Color.decode("#38B6FF"), 15))
+        );
+        del_btn.setVisible(false);
+
         JButton clear_btn = new JButton("Effacer la sélection");
+        clear_btn.setForeground(Color.white);
+        clear_btn.setBackground(Color.decode("#38B6FF"));
+        clear_btn.setFont(new Font("Montserrat", Font.BOLD, 20));
+        clear_btn.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.decode("#0081CC"), 2),
+                BorderFactory.createLineBorder(Color.decode("#38B6FF"), 15))
+        );
+        clear_btn.setVisible(false);
+
         del_btn.setVisible(false);
         clear_btn.setVisible(false);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(add_edit_btn);
+        buttonPanel.add(add_btn);
+        buttonPanel.add(edit_btn);
         buttonPanel.add(del_btn);
         buttonPanel.add(clear_btn);
+        buttonPanel.setBackground(Color.white);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(new JScrollPane(table));
-        this.add(new CollectionForm(table, del_btn, clear_btn));
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.getViewport().setBackground(Color.white);
+        scrollPane.setBorder(new LineBorder(Color.white, 3, true));
+
+        this.add(scrollPane);
+        this.add(new CollectionForm(table, add_btn, del_btn, edit_btn, clear_btn));
         this.add(buttonPanel);
     }
 }

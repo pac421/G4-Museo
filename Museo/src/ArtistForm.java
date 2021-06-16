@@ -30,10 +30,10 @@ public class ArtistForm extends JPanel {
         JTextField lastNameField = new JTextField(20);
         lastNameField.setFont(fieldFont);
 
-        JLabel nameLabel = new JLabel("Prénom");
-        nameLabel.setFont(labelFont);
-        JTextField nameField = new JTextField(20);
-        nameField.setFont(fieldFont);
+        JLabel firstNameLabel = new JLabel("Prénom");
+        firstNameLabel.setFont(labelFont);
+        JTextField firstNameField = new JTextField(20);
+        firstNameField.setFont(fieldFont);
 
         JLabel periodLabel = new JLabel("Période");
         periodLabel.setFont(labelFont);
@@ -52,19 +52,19 @@ public class ArtistForm extends JPanel {
         GroupLayout.SequentialGroup horizontalGroup = groupLayout.createSequentialGroup();
         horizontalGroup.addGroup(groupLayout.createParallelGroup()
                 .addComponent(lastNameLabel)
-                .addComponent(nameLabel)
+                .addComponent(firstNameLabel)
                 .addComponent(periodLabel)
         );
         horizontalGroup.addGroup(groupLayout.createParallelGroup()
                 .addComponent(lastNameField)
-                .addComponent(nameField)
+                .addComponent(firstNameField)
                 .addComponent(periodField)
         );
         groupLayout.setHorizontalGroup(horizontalGroup);
 
         GroupLayout.SequentialGroup verticalGroup = groupLayout.createSequentialGroup();
         verticalGroup.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(lastNameLabel).addComponent(lastNameField));
-        verticalGroup.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(nameLabel).addComponent(nameField));
+        verticalGroup.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(firstNameLabel).addComponent(firstNameField));
         verticalGroup.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(periodLabel).addComponent(periodField));
         groupLayout.setVerticalGroup(verticalGroup);
 
@@ -82,7 +82,7 @@ public class ArtistForm extends JPanel {
 
                 Artist artist = artistDAO.find(id);
                 lastNameField.setText(artist.getLastname());
-                nameField.setText(artist.getFirstname());
+                firstNameField.setText(artist.getFirstname());
                 periodField.setText(artist.getPeriod());
             }
         });
@@ -96,7 +96,7 @@ public class ArtistForm extends JPanel {
             add_btn.setVisible(true);
 
             lastNameField.setText("");
-            nameField.setText("");
+            firstNameField.setText("");
             periodField.setText("");
         });
 
@@ -109,8 +109,41 @@ public class ArtistForm extends JPanel {
             int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous supprimer la ligne séléctionnée ?","Confirmer la suppression", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
             if(dialogResult == JOptionPane.YES_OPTION){
                 artistDAO.delete(artist);
+
                 del_btn.setVisible(false);
                 clear_btn.setVisible(false);
+                edit_btn.setVisible(false);
+                add_btn.setVisible(true);
+
+                lastNameField.setText("");
+                firstNameField.setText("");
+                periodField.setText("");
+
+            }
+        });
+
+       edit_btn.addActionListener(e -> {
+           String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+           System.out.println("delete selected_item_id : " + id);
+           Artist artist = artistDAO.find(id);
+           artist.setFirstname(firstNameField.getText());
+           artist.setLastname(lastNameField.getText());
+           artist.setPeriod(periodField.getText());
+           
+
+            Object[] options = {"Oui", "Non"};
+            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous modifier la ligne séléctionnée ?","Confirmer la modification", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                artistDAO.update(artist);
+
+                del_btn.setVisible(false);
+                clear_btn.setVisible(false);
+                edit_btn.setVisible(false);
+                add_btn.setVisible(true);
+
+                lastNameField.setText("");
+                firstNameField.setText("");
+                periodField.setText("");
             }
         });
         }

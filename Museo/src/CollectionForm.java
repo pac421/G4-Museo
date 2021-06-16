@@ -3,18 +3,32 @@ import dao.CollectionDAO;
 import dao.DAO;
 import dao.DAOFactory;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CollectionForm extends JPanel {
 
-    public CollectionForm(JTable table, JButton del_btn, JButton clear_btn) {
+    public CollectionForm(JTable table, JButton add_btn, JButton del_btn, JButton edit_btn, JButton clear_btn) {
+
+        this.setBorder(new EmptyBorder(20, 20, 20, 20));
+        this.setBackground(Color.white);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        Font labelFont = new Font("Montserrat", Font.PLAIN, 16);
+        Font fieldFont = new Font("Montserrat", Font.PLAIN, 14);
+
         JLabel labelLabel = new JLabel("Label");
+        labelLabel.setFont(labelFont);
         JTextField labelField = new JTextField(20);
+        labelField.setFont(fieldFont);
 
         JLabel periodLabel = new JLabel("Période");
+        periodLabel.setFont(labelFont);
         JTextField periodField = new JTextField(20);
+        periodField.setFont(fieldFont);
 
 
         this.setBorder(BorderFactory.createTitledBorder("Ajouter une oeuvre"));
@@ -51,6 +65,8 @@ public class CollectionForm extends JPanel {
 
                 del_btn.setVisible(true);
                 clear_btn.setVisible(true);
+                edit_btn.setVisible(true);
+                add_btn.setVisible(false);
 
                 Collection collection = collectionDAO.find(id);
                 labelField.setText(collection.getLabel());
@@ -63,9 +79,55 @@ public class CollectionForm extends JPanel {
 
             del_btn.setVisible(false);
             clear_btn.setVisible(false);
+            edit_btn.setVisible(false);
+            add_btn.setVisible(true);
 
             labelField.setText("");
             periodField.setText("");
         });
+
+        del_btn.addActionListener(e -> {
+            String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+            System.out.println("delete selected_item_id : " + id);
+            Collection collection = collectionDAO.find(id);
+
+            Object[] options = {"Oui", "Non"};
+            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous supprimer la ligne séléctionnée ?","Confirmer la suppression", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                collectionDAO.delete(collection);
+
+                del_btn.setVisible(false);
+                clear_btn.setVisible(false);
+                edit_btn.setVisible(false);
+                add_btn.setVisible(true);
+
+                labelField.setText("");
+                periodField.setText("");
+            }
+        });
+
+        edit_btn.addActionListener(e -> {
+            String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+            System.out.println("edit selected_item_id : " + id);
+            Collection collection = collectionDAO.find(id);
+            collection.setLabel(labelField.getText());
+            collection.setPeriod(periodField.getText());
+
+
+            Object[] options = {"Oui", "Non"};
+            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous modifier la ligne séléctionnée ?","Confirmer la modification", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                collectionDAO.update(collection);
+
+                del_btn.setVisible(false);
+                clear_btn.setVisible(false);
+                edit_btn.setVisible(false);
+                add_btn.setVisible(true);
+
+                labelField.setText("");
+                periodField.setText("");
+            }
+        });
+
     }
 }
