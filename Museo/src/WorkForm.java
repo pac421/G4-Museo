@@ -13,8 +13,8 @@ import java.util.HashMap;
 public class WorkForm extends JPanel {
 
     public WorkForm(JTable table, JButton add_btn, JButton edit_btn, JButton del_btn, JButton clear_btn) {
-        this.setBorder(new EmptyBorder(20, 0, 0, 0));
-        this.setBackground(Color.decode("#C2EAFF"));
+        this.setBorder(new EmptyBorder(20, 0, 10, 0));
+        this.setBackground(Color.white);
 
         Font labelFont = new Font("Montserrat", Font.PLAIN, 16);
         Font fieldFont = new Font("Montserrat", Font.PLAIN, 14);
@@ -136,6 +136,7 @@ public class WorkForm extends JPanel {
                 clear_btn.setVisible(true);
 
                 Work work = workDAO.find(id);
+
                 titleField.setText(work.getLabel());
                 descriptionField.setText(work.getDescription());
                 periodField.setText(work.getPeriod());
@@ -150,6 +151,8 @@ public class WorkForm extends JPanel {
 
         clear_btn.addActionListener(e -> {
             System.out.println("clear selection");
+
+            table.getSelectionModel().clearSelection();
 
             add_btn.setVisible(true);
             edit_btn.setVisible(false);
