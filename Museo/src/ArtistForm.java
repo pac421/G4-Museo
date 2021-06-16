@@ -6,22 +6,39 @@ import dao.ArtistDAO;
 import dao.DAO;
 import dao.DAOFactory;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 public class ArtistForm extends JPanel {
 
-    public ArtistForm(JTable table, JButton del_btn, JButton clear_btn) {
+    public ArtistForm(JTable table, JButton add_btn, JButton del_btn, JButton edit_btn, JButton clear_btn) {
+
+        this.setBorder(new EmptyBorder(20, 20, 20, 20));
+        this.setBackground(Color.white);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+
+        Font labelFont = new Font("Montserrat", Font.PLAIN, 16);
+        Font fieldFont = new Font("Montserrat", Font.PLAIN, 14);
+
         JLabel lastNameLabel = new JLabel("Nom");
+        lastNameLabel.setFont(labelFont);
         JTextField lastNameField = new JTextField(20);
+        lastNameField.setFont(fieldFont);
 
         JLabel nameLabel = new JLabel("Prénom");
+        nameLabel.setFont(labelFont);
         JTextField nameField = new JTextField(20);
+        nameField.setFont(fieldFont);
 
         JLabel periodLabel = new JLabel("Période");
+        periodLabel.setFont(labelFont);
         JTextField periodField = new JTextField(20);
+        periodField.setFont(fieldFont);
 
         this.setBorder(BorderFactory.createTitledBorder("Ajouter une oeuvre"));
 
@@ -60,6 +77,8 @@ public class ArtistForm extends JPanel {
 
                 del_btn.setVisible(true);
                 clear_btn.setVisible(true);
+                edit_btn.setVisible(true);
+                add_btn.setVisible(false);
 
                 Artist artist = artistDAO.find(id);
                 lastNameField.setText(artist.getLastname());
@@ -73,6 +92,8 @@ public class ArtistForm extends JPanel {
 
             del_btn.setVisible(false);
             clear_btn.setVisible(false);
+            edit_btn.setVisible(false);
+            add_btn.setVisible(true);
 
             lastNameField.setText("");
             nameField.setText("");
@@ -84,15 +105,13 @@ public class ArtistForm extends JPanel {
             System.out.println("delete selected_item_id : " + id);
             Artist artist = artistDAO.find(id);
 
-            int dialogButton = JOptionPane.YES_NO_OPTION;
-            int dialogResult = JOptionPane.showConfirmDialog (null, "Voulez-vous supprimer la ligne séléctionnée ?","Confirmer la suppression",dialogButton);
+            Object[] options = {"Oui", "Non"};
+            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous supprimer la ligne séléctionnée ?","Confirmer la suppression", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
             if(dialogResult == JOptionPane.YES_OPTION){
                 artistDAO.delete(artist);
-                table.revalidate();
                 del_btn.setVisible(false);
                 clear_btn.setVisible(false);
             }
-
         });
         }
 }
