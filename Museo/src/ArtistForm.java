@@ -5,7 +5,6 @@ import bean.Work;
 import dao.ArtistDAO;
 import dao.DAO;
 import dao.DAOFactory;
-
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.util.ArrayList;
