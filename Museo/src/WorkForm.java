@@ -40,6 +40,7 @@ public class WorkForm extends JPanel {
         for (Category category : categories) {
             categoryList.addItem(new Item(category.getId(), category.getLabel()));
         }
+        categoryList.getModel().setSelectedItem("");
 
         JComboBox<Object> collectionList = new JComboBox<>();
         DAO<Collection> collectionDAO = new DAOFactory().getCollectionDAO();
@@ -48,6 +49,7 @@ public class WorkForm extends JPanel {
         for (Collection collection : collections) {
             collectionList.addItem(new Item(collection.getId(), collection.getLabel()));
         }
+        collectionList.getModel().setSelectedItem("");
 
         this.setBorder(BorderFactory.createTitledBorder("Ajouter une oeuvre"));
 
@@ -101,6 +103,8 @@ public class WorkForm extends JPanel {
                 String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
                 System.out.println("new selected_item_id : "+id);
 
+                this.setBorder(BorderFactory.createTitledBorder("Éditer une oeuvre"));
+
                 del_btn.setVisible(true);
                 clear_btn.setVisible(true);
 
@@ -119,6 +123,8 @@ public class WorkForm extends JPanel {
 
         clear_btn.addActionListener(e -> {
             System.out.println("clear selection");
+
+            this.setBorder(BorderFactory.createTitledBorder("Ajouter une oeuvre"));
 
             del_btn.setVisible(false);
             clear_btn.setVisible(false);
