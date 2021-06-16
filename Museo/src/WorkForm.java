@@ -112,8 +112,8 @@ public class WorkForm extends JPanel {
                 widthField.setText(String.valueOf(work.getWidth()));
                 depthField.setText(String.valueOf(work.getDepth()));
                 weightField.setText(String.valueOf(work.getWeight()));
-                categoryList.setSelectedItem(work.getCategory());
-                collectionList.setSelectedItem(work.getCollection());
+                categoryList.getModel().setSelectedItem(work.getCategory().getLabel());
+                collectionList.getModel().setSelectedItem(work.getCollection().getLabel());
             }
         });
 
@@ -130,8 +130,8 @@ public class WorkForm extends JPanel {
             widthField.setText("");
             depthField.setText("");
             weightField.setText("");
-            categoryList.setSelectedItem("");
-            collectionList.setSelectedItem("");
+            categoryList.getModel().setSelectedItem("");
+            collectionList.getModel().setSelectedItem("");
         });
     }
 
