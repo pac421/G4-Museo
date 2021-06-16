@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class ArtistPanel extends JPanel {
     public ArtistPanel() {
         String[] columns = new String[] {
-                "Prénom", "Nom", "Dates"
+               "ID", "Prénom", "Nom", "Dates"
         };
 
         DAO<Artist> artistDAO = new DAOFactory().getArtistDAO();
@@ -24,6 +24,7 @@ public class ArtistPanel extends JPanel {
         Object[][] data = new Object[artistsLength][];
         for (int i = 0; i < artistsLength; i++) {
             data[i] = new Object[]{
+                    artists.get(i).getId(),
                     artists.get(i).getFirstname(),
                     artists.get(i).getLastname(),
                     artists.get(i).getPeriod()
@@ -31,7 +32,7 @@ public class ArtistPanel extends JPanel {
         }
 
         final Class[] columnClass = new Class[] {
-                String.class, String.class, String.class,
+               String.class, String.class, String.class, String.class,
         };
 
         DefaultTableModel model = new DefaultTableModel(data, columns) {
@@ -46,6 +47,7 @@ public class ArtistPanel extends JPanel {
         };
 
         JTable table = new JTable(model);
+        table.removeColumn(table.getColumn("ID"));
 
         JButton add_edit_btn = new JButton("Ajouter");
         JButton del_btn = new JButton("Supprimer");
