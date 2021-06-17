@@ -30,10 +30,6 @@ public class CollectionForm extends JPanel {
         JTextField periodField = new JTextField(20);
         periodField.setFont(fieldFont);
 
-
-        this.setBorder(BorderFactory.createTitledBorder("Ajouter une oeuvre"));
-
-
         GroupLayout groupLayout = new GroupLayout(this);
         this.setLayout(groupLayout);
 
