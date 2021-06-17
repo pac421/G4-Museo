@@ -15,11 +15,23 @@ public class LoginFrame extends JFrame {
         panel.setBackground(Color.white);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton closeButton = new JButton("Quitter");
+        closeButton.setForeground(Color.black);
+        closeButton.setBackground(Color.white);
+        closeButton.setFont(new Font("Montserrat", Font.BOLD, 14));
+        closeButton.setBorder(new EmptyBorder(40, 0, 0, 0));
+        closeButton.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.white, 0),
+                BorderFactory.createLineBorder(Color.white, 3))
+        );
+        panel.add(closeButton);
 
         try {
             BufferedImage logo = ImageIO.read(new File("resources/logo.png"));
             JLabel logoLabel = new JLabel(new ImageIcon(logo.getScaledInstance(200, 200, Image.SCALE_FAST)));
-            logoLabel.setBorder(new EmptyBorder(0, 0, 20, 0));
+            logoLabel.setBorder(new EmptyBorder(0, 85, 20, 0));
             panel.add(logoLabel);
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,17 +72,6 @@ public class LoginFrame extends JFrame {
                 BorderFactory.createLineBorder(Color.decode("#38B6FF"), 15))
         );
         panel.add(connexionButton);
-
-        JButton closeButton = new JButton("Quitter");
-        closeButton.setForeground(Color.black);
-        closeButton.setBackground(Color.white);
-        closeButton.setFont(new Font("Montserrat", Font.BOLD, 14));
-        closeButton.setBorder(new EmptyBorder(40, 0, 0, 0));
-        closeButton.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.white, 0),
-                BorderFactory.createLineBorder(Color.white, 3))
-        );
-        panel.add(closeButton);
 
         connexionButton.addActionListener(event -> {
             String email = emailField.getText();
