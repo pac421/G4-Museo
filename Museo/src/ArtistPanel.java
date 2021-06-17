@@ -12,7 +12,10 @@ import java.util.HashMap;
 
 public class ArtistPanel extends JPanel {
     public ArtistPanel() {
+        this.load();
+    }
 
+    public void load() {
         this.setBorder(new EmptyBorder(20, 20, 20, 20));
         this.setBackground(Color.white);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -119,7 +122,14 @@ public class ArtistPanel extends JPanel {
         scrollPane.setBorder(new LineBorder(Color.white, 3, true));
 
         this.add(scrollPane);
-        this.add(new ArtistForm(table, add_btn, del_btn, edit_btn, clear_btn));
+        this.add(new ArtistForm(table, add_btn, del_btn, edit_btn, clear_btn, this));
         this.add(buttonPanel);
-        }
+    }
+
+    public void reload() {
+        this.removeAll();
+        this.revalidate();
+        this.repaint();
+        this.load();
+    }
 }

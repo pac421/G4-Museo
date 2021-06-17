@@ -134,10 +134,12 @@ public class CategoryForm extends JPanel {
 
         add_btn.addActionListener(e -> {
             Object[] options = {"Oui", "Non"};
-            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajout une collection ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajouter une collection ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
             if(dialogResult == JOptionPane.YES_OPTION) {
                 Category category = new Category(nameField.getText());
                 categoryDAO.create(category);
+
+                categoryPanel.reload();
             }
         });
 

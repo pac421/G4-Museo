@@ -12,7 +12,10 @@ import java.util.HashMap;
 
 public class CollectionPanel extends JPanel {
     public CollectionPanel() {
+        this.load();
+    }
 
+    public void load() {
         this.setBorder(new EmptyBorder(20, 20, 20, 20));
         this.setBackground(Color.white);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -118,7 +121,14 @@ public class CollectionPanel extends JPanel {
         scrollPane.setBorder(new LineBorder(Color.white, 3, true));
 
         this.add(scrollPane);
-        this.add(new CollectionForm(table, add_btn, del_btn, edit_btn, clear_btn));
+        this.add(new CollectionForm(table, add_btn, del_btn, edit_btn, clear_btn, this));
         this.add(buttonPanel);
+    }
+
+    public void reload() {
+        this.removeAll();
+        this.revalidate();
+        this.repaint();
+        this.load();
     }
 }

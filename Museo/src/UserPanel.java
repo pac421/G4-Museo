@@ -13,7 +13,10 @@ import java.util.HashMap;
 public class UserPanel extends JPanel {
 
     public UserPanel() {
+        this.load();
+    }
 
+    public void load() {
         this.setBorder(new EmptyBorder(20, 20, 20, 20));
         this.setBackground(Color.white);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -120,8 +123,15 @@ public class UserPanel extends JPanel {
         scrollPane.setBorder(new LineBorder(Color.white, 3, true));
 
         this.add(scrollPane);
-        this.add(new UserForm(table, add_btn, edit_btn, del_btn, clear_btn));
+        this.add(new UserForm(table, add_btn, edit_btn, del_btn, clear_btn, this));
         this.add(buttonPanel);
+    }
+
+    public void reload() {
+        this.removeAll();
+        this.revalidate();
+        this.repaint();
+        this.load();
     }
 }
 

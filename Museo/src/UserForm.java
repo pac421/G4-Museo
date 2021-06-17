@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class UserForm extends JPanel {
 
-    public UserForm(JTable table, JButton add_btn, JButton edit_btn, JButton del_btn, JButton clear_btn) {
+    public UserForm(JTable table, JButton add_btn, JButton edit_btn, JButton del_btn, JButton clear_btn, UserPanel userPanel) {
 
         this.setBorder(new EmptyBorder(20, 0, 10, 0));
         this.setBackground(Color.white);
@@ -146,6 +146,8 @@ public class UserForm extends JPanel {
                     passwordField.setText("");
                     emailField.setText("");
                     roleList.getModel().setSelectedItem("");
+
+                    userPanel.reload();
                 }
         });
 
@@ -189,6 +191,8 @@ public class UserForm extends JPanel {
                 passwordField.setText("");
                 emailField.setText("");
                 roleList.getModel().setSelectedItem("");
+
+                userPanel.reload();
             }
         });
 
@@ -207,6 +211,7 @@ public class UserForm extends JPanel {
 
                 User user = new User(firstNameField.getText(), lastNameField.getText(),emailField.getText(), passwordField.getText(), role);
                 userDAO.create(user);
+                userPanel.reload();
             }
 
             firstNameField.setText("");

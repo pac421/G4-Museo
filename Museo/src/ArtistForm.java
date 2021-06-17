@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class ArtistForm extends JPanel {
 
-    public ArtistForm(JTable table, JButton add_btn, JButton del_btn, JButton edit_btn, JButton clear_btn) {
+    public ArtistForm(JTable table, JButton add_btn, JButton del_btn, JButton edit_btn, JButton clear_btn, ArtistPanel artistPanel) {
 
         this.setBorder(new EmptyBorder(20, 20, 20, 20));
         this.setBackground(Color.white);
@@ -120,6 +120,8 @@ public class ArtistForm extends JPanel {
                     lastNameField.setText("");
                     firstNameField.setText("");
                     periodField.setText("");
+
+                    artistPanel.reload();
                 }
             }
             else{
@@ -149,16 +151,19 @@ public class ArtistForm extends JPanel {
                 lastNameField.setText("");
                 firstNameField.setText("");
                 periodField.setText("");
+
+                artistPanel.reload();
             }
         });
 
        add_btn.addActionListener(e -> {
            Object[] options = {"Oui", "Non"};
-           int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajout un artiste ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+           int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajouter un artiste ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
            if(dialogResult == JOptionPane.YES_OPTION) {
                Artist artist = new Artist(firstNameField.getText(), lastNameField.getText(), periodField.getText());
                artistDAO.create(artist);
+               artistPanel.reload();
            }
        });
-        }
+    }
 }

@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class CollectionForm extends JPanel {
 
-    public CollectionForm(JTable table, JButton add_btn, JButton del_btn, JButton edit_btn, JButton clear_btn) {
+    public CollectionForm(JTable table, JButton add_btn, JButton del_btn, JButton edit_btn, JButton clear_btn, CollectionPanel collectionPanel) {
 
         this.setBorder(new EmptyBorder(20, 20, 20, 20));
         this.setBackground(Color.white);
@@ -109,6 +109,8 @@ public class CollectionForm extends JPanel {
 
                     labelField.setText("");
                     periodField.setText("");
+
+                    collectionPanel.reload();
                 }
             }
             else{
@@ -136,15 +138,18 @@ public class CollectionForm extends JPanel {
 
                 labelField.setText("");
                 periodField.setText("");
+
+                collectionPanel.reload();
             }
         });
 
         add_btn.addActionListener(e -> {
             Object[] options = {"Oui", "Non"};
-            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajout une collection ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajouter une collection ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
             if(dialogResult == JOptionPane.YES_OPTION) {
                 Collection collection = new Collection(labelField.getText(), periodField.getText());
                 collectionDAO.create(collection);
+                collectionPanel.reload();
             }
         });
 
