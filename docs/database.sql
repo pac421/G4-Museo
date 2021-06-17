@@ -108,12 +108,6 @@ CREATE TABLE `ARTIST_WORK`
 	PRIMARY KEY (artist_id, work_id)
 );
 
-INSERT INTO `ROLE` VALUES
-('8f818b53-969b-4cd9-8159-6ddce75e5710', 'Superadmin');
-
-INSERT INTO `USER` VALUES
-('dba28fa8-6d58-4f5a-b158-eeadddbb1ea4', 'Michel', 'TESTEUR', 'michel.testeur@mail.com', 'test123', '8f818b53-969b-4cd9-8159-6ddce75e5710'),
-('dba28fa8-6d58-4f5a-b158-eeadddbb1ea8', 'test', 'test', 'test', 'test', '8f818b53-969b-4cd9-8159-6ddce75e5710');
 
 ALTER TABLE `WORK`
 ADD FOREIGN KEY (category_id)   REFERENCES `CATEGORY`(id),
