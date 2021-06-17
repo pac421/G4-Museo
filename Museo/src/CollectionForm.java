@@ -137,5 +137,14 @@ public class CollectionForm extends JPanel {
             }
         });
 
+        add_btn.addActionListener(e -> {
+            Object[] options = {"Oui", "Non"};
+            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajout une collection ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+            if(dialogResult == JOptionPane.YES_OPTION) {
+                Collection collection = new Collection(labelField.getText(), periodField.getText());
+                collectionDAO.create(collection);
+            }
+        });
+
     }
 }
