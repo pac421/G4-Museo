@@ -1,4 +1,7 @@
+import bean.Artist;
+import bean.ArtistWork;
 import bean.Collection;
+import bean.Work;
 import dao.CollectionDAO;
 import dao.DAO;
 import dao.DAOFactory;
@@ -58,7 +61,6 @@ public class CollectionForm extends JPanel {
             if (!event.getValueIsAdjusting() && table.getSelectedRow() != -1){
                 String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
                 System.out.println("new selected_item_id : "+id);
-
                 del_btn.setVisible(true);
                 clear_btn.setVisible(true);
                 edit_btn.setVisible(true);
@@ -87,18 +89,28 @@ public class CollectionForm extends JPanel {
             System.out.println("delete selected_item_id : " + id);
             Collection collection = collectionDAO.find(id);
 
-            Object[] options = {"Oui", "Non"};
-            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous supprimer la ligne séléctionnée ?","Confirmer la suppression", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
-            if(dialogResult == JOptionPane.YES_OPTION){
-                collectionDAO.delete(collection);
+            DAO<Work> workDAO = new DAOFactory().getWorkDAO();
+            HashMap<String, String> filters = new HashMap<>();
+            filters.put("collection_id", collection.getId());
+            ArrayList<Work> works = workDAO.findAll(filters);
 
-                del_btn.setVisible(false);
-                clear_btn.setVisible(false);
-                edit_btn.setVisible(false);
-                add_btn.setVisible(true);
+            if(works.size() == 0) {
+                Object[] options = {"Oui", "Non"};
+                int dialogResult = JOptionPane.showOptionDialog(null, "Voulez-vous supprimer la ligne séléctionnée ?", "Confirmer la suppression", 0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    collectionDAO.delete(collection);
 
-                labelField.setText("");
-                periodField.setText("");
+                    del_btn.setVisible(false);
+                    clear_btn.setVisible(false);
+                    edit_btn.setVisible(false);
+                    add_btn.setVisible(true);
+
+                    labelField.setText("");
+                    periodField.setText("");
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Cette collection a encore des oeuvres qui lui sont attirbuées, suppression annulée.");
             }
         });
 
