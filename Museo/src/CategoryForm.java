@@ -1,17 +1,11 @@
 import bean.Category;
-import bean.Collection;
-import bean.Category;
-import bean.Work;
-import dao.CategoryDAO;
+
 import dao.DAO;
 import dao.DAOFactory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CategoryForm extends JPanel {
 

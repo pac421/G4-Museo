@@ -67,8 +67,6 @@ public class CategoryPanel extends JPanel {
                 BorderFactory.createLineBorder(Color.decode("#FFDE59"), 2))
         );
 
-
-
         JButton add_btn = new JButton("Ajouter");
         add_btn.setForeground(Color.white);
         add_btn.setBackground(Color.decode("#38B6FF"));
@@ -108,7 +106,6 @@ public class CategoryPanel extends JPanel {
         );
         clear_btn.setVisible(false);
 
-
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(add_btn);
         buttonPanel.add(edit_btn);
@@ -120,11 +117,9 @@ public class CategoryPanel extends JPanel {
         scrollPane.getViewport().setBackground(Color.white);
         scrollPane.setBorder(new LineBorder(Color.white, 3, true));
 
-
         this.add(scrollPane);
         this.add(new CategoryForm(table, add_btn, edit_btn, del_btn, clear_btn));
         this.add(buttonPanel);
-
 
     }
 }

@@ -1,5 +1,3 @@
-import bean.Category;
-import bean.Collection;
 import bean.Role;
 import bean.User;
 import dao.DAO;
@@ -7,7 +5,6 @@ import dao.DAOFactory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,7 +112,6 @@ public class UserForm extends JPanel {
             roleList.getModel().setSelectedItem("");
 
         });
-
     }
 
     static class Item {
