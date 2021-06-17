@@ -1,5 +1,7 @@
+import bean.Category;
 import bean.Role;
 import bean.User;
+import bean.Work;
 import dao.DAO;
 import dao.DAOFactory;
 
@@ -34,6 +36,11 @@ public class UserForm extends JPanel {
         JTextField emailField = new JTextField(20);
         emailField.setFont(fieldFont);
 
+        JLabel passwordLabel = new JLabel("Password");
+        passwordLabel.setFont(labelFont);
+        JTextField passwordField = new JTextField(20);
+        passwordField.setFont(fieldFont);
+
         JComboBox<Object> roleList = new JComboBox<>();
         roleList.setFont(fieldFont);
         DAO<Role> roleDAO = new DAOFactory().getRoleDAO();
@@ -56,12 +63,14 @@ public class UserForm extends JPanel {
         horizontalGroup.addGroup(groupLayout.createParallelGroup()
                 .addComponent(firstNameLabel)
                 .addComponent(lastNameLabel)
+                .addComponent(passwordLabel)
                 .addComponent(emailLabel)
                 .addComponent(roleLabel)
         );
         horizontalGroup.addGroup(groupLayout.createParallelGroup()
                 .addComponent(firstNameField)
                 .addComponent(lastNameField)
+                .addComponent(passwordField)
                 .addComponent(emailField)
                 .addComponent(roleList)
 
@@ -71,6 +80,7 @@ public class UserForm extends JPanel {
         GroupLayout.SequentialGroup verticalGroup = groupLayout.createSequentialGroup();
         verticalGroup.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(firstNameLabel).addComponent(firstNameField));
         verticalGroup.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(lastNameLabel).addComponent(lastNameField));
+        verticalGroup.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(passwordLabel).addComponent(passwordField));
         verticalGroup.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(emailLabel).addComponent(emailField));
         verticalGroup.addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(roleLabel).addComponent(roleList));
         groupLayout.setVerticalGroup(verticalGroup);
@@ -110,8 +120,103 @@ public class UserForm extends JPanel {
             lastNameField.setText("");
             emailField.setText("");
             roleList.getModel().setSelectedItem("");
+        });
+
+        del_btn.addActionListener(e -> {
+            String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+            System.out.println("delete selected_item_id : " + id);
+            User user = userDAO.find(id);
+
+                Object[] options = {"Oui", "Non"};
+                int dialogResult = JOptionPane.showOptionDialog(null,
+                        "Voulez-vous vraiment supprimer l'utilisateur : " + user.getEmail() + " ?",
+                        "Confirmer la suppression", 0,
+                        JOptionPane.INFORMATION_MESSAGE, null,
+                        options, null);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    userDAO.delete(user);
+
+                    del_btn.setVisible(false);
+                    clear_btn.setVisible(false);
+                    edit_btn.setVisible(false);
+                    add_btn.setVisible(true);
+
+                    firstNameField.setText("");
+                    lastNameField.setText("");
+                    passwordField.setText("");
+                    emailField.setText("");
+                    roleList.getModel().setSelectedItem("");
+                }
+        });
+
+        edit_btn.addActionListener(e -> {
+            String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+            System.out.println("edit selected_item_id : " + id);
+            User user = userDAO.find(id);
+            user.setFirstname(firstNameField.getText());
+            user.setLastname(lastNameField.getText());
+            user.setEmail(emailField.getText());
+
+            if(roleList.getSelectedItem().getClass() == Role.class){
+                Role role = (Role)roleList.getSelectedItem();
+                user.setRole(role);
+            }
+            else {
+                Item item = (Item)roleList.getSelectedItem();
+                user.setRole(new Role(item.getId(), item.getDescription()));
+            }
+
+            if(passwordField.getText().length() !=0 ){
+                user.setPassword(passwordField.getText());
+            }
+
+            Object[] options = {"Oui", "Non"};
+            int dialogResult = JOptionPane.showOptionDialog(null,
+                    "Voulez-vous modifier la ligne séléctionnée ?","Confirmer la modification",
+                    0,JOptionPane.INFORMATION_MESSAGE,
+                    null,options,null);
+
+            if(dialogResult == JOptionPane.YES_OPTION){
+                userDAO.update(user);
+
+                del_btn.setVisible(false);
+                clear_btn.setVisible(false);
+                edit_btn.setVisible(false);
+                add_btn.setVisible(true);
+
+                firstNameField.setText("");
+                lastNameField.setText("");
+                passwordField.setText("");
+                emailField.setText("");
+                roleList.getModel().setSelectedItem("");
+            }
+        });
+
+        add_btn.addActionListener(e -> {
+            Object[] options = {"Oui", "Non"};
+            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajouter un utilisateur ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+            if(dialogResult == JOptionPane.YES_OPTION) {
+                Role role;
+                if(roleList.getSelectedItem().getClass() == Role.class){
+                    role = (Role)roleList.getSelectedItem();
+                }
+                else {
+                    Item item = (Item)roleList.getSelectedItem();
+                    role = new Role(item.getId(), item.getDescription());
+                }
+
+                User user = new User(firstNameField.getText(), lastNameField.getText(),emailField.getText(), passwordField.getText(), role);
+                userDAO.create(user);
+            }
+
+            firstNameField.setText("");
+            lastNameField.setText("");
+            passwordField.setText("");
+            emailField.setText("");
+            roleList.getModel().setSelectedItem("");
 
         });
+
     }
 
     static class Item {
