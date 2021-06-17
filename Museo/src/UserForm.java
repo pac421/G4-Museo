@@ -156,14 +156,14 @@ public class UserForm extends JPanel {
             user.setFirstname(firstNameField.getText());
             user.setLastname(lastNameField.getText());
             user.setEmail(emailField.getText());
-            
+
             if(roleList.getSelectedItem().getClass() == Role.class){
-                Item item = (Item)roleList.getSelectedItem();
-                user.setRole(new Role(item.getId(), item.getDescription()));
-            }
-            else {
                 Role role = (Role)roleList.getSelectedItem();
                 user.setRole(role);
+            }
+            else {
+                Item item = (Item)roleList.getSelectedItem();
+                user.setRole(new Role(item.getId(), item.getDescription()));
             }
 
             if(passwordField.getText().length() !=0 ){
@@ -195,9 +195,16 @@ public class UserForm extends JPanel {
         add_btn.addActionListener(e -> {
             Object[] options = {"Oui", "Non"};
             int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajouter un utilisateur ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
-            Item item = (Item)roleList.getSelectedItem();
-            Role role = new Role(item.getId(), item.getDescription());
             if(dialogResult == JOptionPane.YES_OPTION) {
+                Role role;
+                if(roleList.getSelectedItem().getClass() == Role.class){
+                    role = (Role)roleList.getSelectedItem();
+                }
+                else {
+                    Item item = (Item)roleList.getSelectedItem();
+                    role = new Role(item.getId(), item.getDescription());
+                }
+
                 User user = new User(firstNameField.getText(), lastNameField.getText(),emailField.getText(), passwordField.getText(), role);
                 userDAO.create(user);
             }

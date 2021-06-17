@@ -2,6 +2,9 @@ import bean.*;
 import dao.DAO;
 import dao.DAOFactory;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -318,6 +321,72 @@ public class WorkForm extends JPanel {
             System.out.println("lend selected");
             showPropertyForm(false);
         });
+
+        del_btn.addActionListener(e -> {
+            String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+            System.out.println("delete selected_item_id : " + id);
+
+            Object[] options = {"Oui", "Non"};
+            int dialogResult = JOptionPane.showOptionDialog(null, "Voulez-vous supprimer la ligne séléctionnée ?", "Confirmer la suppression", 0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                Work work = workDAO.find(id);
+                LocalDate localDate = LocalDate.now();
+                work.setDeletedAt(Date.valueOf(localDate));
+                workDAO.update(work);
+
+                del_btn.setVisible(false);
+                clear_btn.setVisible(false);
+                edit_btn.setVisible(false);
+                add_btn.setVisible(true);
+
+                titleField.setText("");
+                descriptionField.setText("");
+                periodField.setText("");
+                heightField.setText("");
+                widthField.setText("");
+                depthField.setText("");
+                weightField.setText("");
+                categoryList.getModel().setSelectedItem("");
+                collectionList.getModel().setSelectedItem("");
+
+                ownedAtField.setText("");
+                ownedFromField.setText("");
+                priceField.setText("");
+                startField.setText("");
+                endField.setText("");
+                lenderField.setText("");
+            }
+        });
+/*
+        edit_btn.addActionListener(e -> {
+            String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+            System.out.println("edit selected_item_id : " + id);
+            Category category = categoryDAO.find(id);
+            category.setLabel(nameField.getText());
+
+            Object[] options = {"Oui", "Non"};
+            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous modifier la ligne séléctionnée ?","Confirmer la modification", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                categoryDAO.update(category);
+
+                del_btn.setVisible(false);
+                clear_btn.setVisible(false);
+                edit_btn.setVisible(false);
+                add_btn.setVisible(true);
+
+                nameField.setText("");
+            }
+        });
+
+        add_btn.addActionListener(e -> {
+            Object[] options = {"Oui", "Non"};
+            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajout une collection ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+            if(dialogResult == JOptionPane.YES_OPTION) {
+                Category category = new Category(nameField.getText());
+                categoryDAO.create(category);
+            }
+        });
+*/
     }
 
     private void showPropertyForm(Boolean state) {
