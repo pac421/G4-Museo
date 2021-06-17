@@ -20,7 +20,6 @@ public class WorkDAO extends DAO<Work>{
                     " LEFT JOIN USER U ON W.deleted_by_id = U.id";
             sql = addFilters(sql, filters);
             sql += " AND W.deleted_at IS NULL";
-            System.out.println(sql);
 
             PreparedStatement statement = connect.prepareStatement(sql);
             ResultSet result = statement.executeQuery();
