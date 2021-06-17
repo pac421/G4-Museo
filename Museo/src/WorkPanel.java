@@ -5,11 +5,16 @@ import bean.Work;
 import customUX.ForcedListSelectionModel;
 import dao.DAO;
 import dao.DAOFactory;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -103,6 +108,9 @@ public class WorkPanel extends JPanel {
                 BorderFactory.createLineBorder(Color.decode("#FFDE59"), 2))
         );
 
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.white);
+
         JButton add_btn = new JButton("Ajouter");
         add_btn.setForeground(Color.white);
         add_btn.setBackground(Color.decode("#38B6FF"));
@@ -111,6 +119,7 @@ public class WorkPanel extends JPanel {
                 BorderFactory.createLineBorder(Color.decode("#0081CC"), 2),
                 BorderFactory.createLineBorder(Color.decode("#38B6FF"), 15))
         );
+        buttonPanel.add(add_btn);
 
         JButton edit_btn = new JButton("Éditer");
         edit_btn.setForeground(Color.white);
@@ -121,6 +130,7 @@ public class WorkPanel extends JPanel {
                 BorderFactory.createLineBorder(Color.decode("#38B6FF"), 15))
         );
         edit_btn.setVisible(false);
+        buttonPanel.add(edit_btn);
 
         JButton del_btn = new JButton("Supprimer");
         del_btn.setForeground(Color.white);
@@ -131,6 +141,7 @@ public class WorkPanel extends JPanel {
                 BorderFactory.createLineBorder(Color.decode("#38B6FF"), 15))
         );
         del_btn.setVisible(false);
+        buttonPanel.add(del_btn);
 
         JButton clear_btn = new JButton("Effacer la sélection");
         clear_btn.setForeground(Color.white);
@@ -141,20 +152,22 @@ public class WorkPanel extends JPanel {
                 BorderFactory.createLineBorder(Color.decode("#38B6FF"), 15))
         );
         clear_btn.setVisible(false);
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(add_btn);
-        buttonPanel.add(edit_btn);
-        buttonPanel.add(del_btn);
         buttonPanel.add(clear_btn);
-        buttonPanel.setBackground(Color.white);
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.getViewport().setBackground(Color.white);
         scrollPane.setBorder(new LineBorder(Color.white, 3, true));
-
         this.add(scrollPane);
-        this.add(new WorkForm(table, add_btn, edit_btn, del_btn, clear_btn));
+
+        JPanel workPicturePanel = new JPanel();
+        workPicturePanel.setBackground(Color.white);
+
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        contentPanel.setBackground(Color.white);
+        contentPanel.add(new WorkForm(table, add_btn, edit_btn, del_btn, clear_btn, workPicturePanel));
+        contentPanel.add(workPicturePanel, BorderLayout.EAST);
+
+        this.add(contentPanel);
         this.add(buttonPanel);
     }
 }

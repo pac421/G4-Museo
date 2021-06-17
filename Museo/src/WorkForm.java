@@ -1,10 +1,15 @@
 import bean.*;
 import dao.DAO;
 import dao.DAOFactory;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,7 +17,7 @@ public class WorkForm extends JPanel {
     JLabel ownedAtLabel, ownedFromLabel, priceLabel, startLabel, endLabel, lenderLabel;
     JTextField ownedAtField, ownedFromField, priceField, startField, endField, lenderField;
 
-    public WorkForm(JTable table, JButton add_btn, JButton edit_btn, JButton del_btn, JButton clear_btn) {
+    public WorkForm(JTable table, JButton add_btn, JButton edit_btn, JButton del_btn, JButton clear_btn, JPanel workPicturePanel) {
         this.setBorder(new EmptyBorder(20, 0, 10, 0));
         this.setBackground(Color.white);
 
@@ -202,6 +207,7 @@ public class WorkForm extends JPanel {
         DAO<Work> workDAO = new DAOFactory().getWorkDAO();
         DAO<Property> propertyDAO = new DAOFactory().getPropertyDAO();
         DAO<Lend> lendDAO = new DAOFactory().getLendDAO();
+        DAO<Picture> pictureDAO = new DAOFactory().getPictureDAO();
 
         table.getSelectionModel().addListSelectionListener(event -> {
             if (!event.getValueIsAdjusting() && table.getSelectedRow() != -1){
@@ -245,6 +251,26 @@ public class WorkForm extends JPanel {
                     endField.setText(String.valueOf(lend.getEnd()));
                     lenderField.setText(lend.getLender());
                 }
+
+                HashMap<String, String> filters = new HashMap<>();
+                filters.put("work_id", id);
+                ArrayList<Picture> pictures = pictureDAO.findAll(filters);
+                Picture firstPicture = pictures.get(0);
+
+                Component[] componentList = workPicturePanel.getComponents();
+                for(Component c : componentList){
+                    workPicturePanel.remove(c);
+                }
+                workPicturePanel.revalidate();
+                workPicturePanel.repaint();
+
+                try {
+                    BufferedImage workBufferedImage = ImageIO.read(new File("resources/work_pictures/"+firstPicture.getId()+"."+firstPicture.getExtension()));
+                    JLabel workPicLabel = new JLabel(new ImageIcon(workBufferedImage.getScaledInstance(410, 410, Image.SCALE_FAST)));
+                    workPicturePanel.add(workPicLabel);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -274,6 +300,13 @@ public class WorkForm extends JPanel {
             startField.setText("");
             endField.setText("");
             lenderField.setText("");
+
+            Component[] componentList = workPicturePanel.getComponents();
+            for(Component c : componentList){
+                workPicturePanel.remove(c);
+            }
+            workPicturePanel.revalidate();
+            workPicturePanel.repaint();
         });
 
         rbProperty.addActionListener(e -> {

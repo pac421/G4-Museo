@@ -47,5 +47,9 @@ public class DAOFactory {
     public static DAO<PropertyState> getPropertyStateDAO(){
         return new PropertyStateDAO();
     }
+
+    public static DAO<Picture> getPictureDAO(){
+        return new PictureDAO();
+    }
 }
 
