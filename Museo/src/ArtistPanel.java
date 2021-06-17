@@ -1,8 +1,5 @@
-import bean.ArtistWork;
-import bean.Lend;
-import bean.Property;
 import bean.Artist;
-import customUI.ForcedListSelectionModel;
+import customUX.ForcedListSelectionModel;
 import dao.DAO;
 import dao.DAOFactory;
 import javax.swing.*;
@@ -11,7 +8,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class ArtistPanel extends JPanel {

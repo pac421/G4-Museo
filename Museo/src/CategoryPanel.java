@@ -1,5 +1,5 @@
 import bean.Category;
-import customUI.ForcedListSelectionModel;
+import customUX.ForcedListSelectionModel;
 import dao.DAO;
 import dao.DAOFactory;
 

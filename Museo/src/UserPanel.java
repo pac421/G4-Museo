@@ -1,9 +1,7 @@
 import bean.User;
-
-import customUI.ForcedListSelectionModel;
+import customUX.ForcedListSelectionModel;
 import dao.DAO;
 import dao.DAOFactory;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -110,7 +108,6 @@ public class UserPanel extends JPanel {
         );
         clear_btn.setVisible(false);
 
-
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(add_btn);
         buttonPanel.add(edit_btn);
@@ -118,11 +115,13 @@ public class UserPanel extends JPanel {
         buttonPanel.add(clear_btn);
         buttonPanel.setBackground(Color.white);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(new JScrollPane(table));
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.getViewport().setBackground(Color.white);
+        scrollPane.setBorder(new LineBorder(Color.white, 3, true));
+
+        this.add(scrollPane);
         this.add(new UserForm(table, add_btn, edit_btn, del_btn, clear_btn));
         this.add(buttonPanel);
-        this.setLayout(new GridLayout(0, 1));
     }
 }
 

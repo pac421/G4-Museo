@@ -1,8 +1,7 @@
 import bean.Collection;
-import customUI.ForcedListSelectionModel;
+import customUX.ForcedListSelectionModel;
 import dao.DAO;
 import dao.DAOFactory;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;

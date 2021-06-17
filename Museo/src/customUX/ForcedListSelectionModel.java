@@ -1,4 +1,4 @@
-package customUI;
+package customUX;
 
 import javax.swing.*;
 
