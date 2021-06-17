@@ -1,7 +1,4 @@
-import bean.Artist;
-import bean.Category;
-import bean.Collection;
-import bean.Work;
+import bean.*;
 import dao.ArtistDAO;
 import dao.DAO;
 import dao.DAOFactory;
@@ -102,20 +99,29 @@ public class ArtistForm extends JPanel {
             System.out.println("delete selected_item_id : " + id);
             Artist artist = artistDAO.find(id);
 
-            Object[] options = {"Oui", "Non"};
-            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous supprimer la ligne séléctionnée ?","Confirmer la suppression", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
-            if(dialogResult == JOptionPane.YES_OPTION){
-                artistDAO.delete(artist);
+            DAO<ArtistWork> artistWorkDAO = new DAOFactory().getArtistWorkDAO();
+            HashMap<String, String> filters = new HashMap<>();
+            filters.put("artist_id", artist.getId());
+            ArrayList<ArtistWork> works = artistWorkDAO.findAll(filters);
 
-                del_btn.setVisible(false);
-                clear_btn.setVisible(false);
-                edit_btn.setVisible(false);
-                add_btn.setVisible(true);
+            if(works.size() == 0) {
+                Object[] options = {"Oui", "Non"};
+                int dialogResult = JOptionPane.showOptionDialog(null, "Voulez-vous supprimer la ligne séléctionnée ?", "Confirmer la suppression", 0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    artistDAO.delete(artist);
 
-                lastNameField.setText("");
-                firstNameField.setText("");
-                periodField.setText("");
+                    del_btn.setVisible(false);
+                    clear_btn.setVisible(false);
+                    edit_btn.setVisible(false);
+                    add_btn.setVisible(true);
 
+                    lastNameField.setText("");
+                    firstNameField.setText("");
+                    periodField.setText("");
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Cet artiste a encore des oeuvres qui lui sont attirbuées, suppression annulée.");
             }
         });
 
@@ -143,5 +149,14 @@ public class ArtistForm extends JPanel {
                 periodField.setText("");
             }
         });
+
+       add_btn.addActionListener(e -> {
+           Object[] options = {"Oui", "Non"};
+           int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajout un artiste ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+           if(dialogResult == JOptionPane.YES_OPTION) {
+               Artist artist = new Artist(firstNameField.getText(), lastNameField.getText(), periodField.getText());
+               artistDAO.create(artist);
+           }
+       });
         }
 }
