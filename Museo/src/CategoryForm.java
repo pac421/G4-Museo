@@ -1,11 +1,15 @@
 import bean.Category;
 
+import bean.Collection;
+import bean.Work;
 import dao.DAO;
 import dao.DAOFactory;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CategoryForm extends JPanel {
 
@@ -71,6 +75,64 @@ public class CategoryForm extends JPanel {
 
             nameField.setText("");
 
+        });
+
+        del_btn.addActionListener(e -> {
+            String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+            System.out.println("delete selected_item_id : " + id);
+            Category category = categoryDAO.find(id);
+
+            DAO<Work> workDAO = new DAOFactory().getWorkDAO();
+            HashMap<String, String> filters = new HashMap<>();
+            filters.put("W.category_id", category.getId());
+            ArrayList<Work> works = workDAO.findAll(filters);
+
+            if(works.size() == 0) {
+                Object[] options = {"Oui", "Non"};
+                int dialogResult = JOptionPane.showOptionDialog(null, "Voulez-vous supprimer la ligne séléctionnée ?", "Confirmer la suppression", 0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    categoryDAO.delete(category);
+
+                    del_btn.setVisible(false);
+                    clear_btn.setVisible(false);
+                    edit_btn.setVisible(false);
+                    add_btn.setVisible(true);
+
+                    nameField.setText("");
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Cette catégorie a encore des oeuvres qui lui sont attirbuées, suppression annulée.");
+            }
+        });
+
+        edit_btn.addActionListener(e -> {
+            String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
+            System.out.println("edit selected_item_id : " + id);
+            Category category = categoryDAO.find(id);
+            category.setLabel(nameField.getText());
+
+            Object[] options = {"Oui", "Non"};
+            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous modifier la ligne séléctionnée ?","Confirmer la modification", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                categoryDAO.update(category);
+
+                del_btn.setVisible(false);
+                clear_btn.setVisible(false);
+                edit_btn.setVisible(false);
+                add_btn.setVisible(true);
+
+                nameField.setText("");
+            }
+        });
+
+        add_btn.addActionListener(e -> {
+            Object[] options = {"Oui", "Non"};
+            int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajout une collection ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+            if(dialogResult == JOptionPane.YES_OPTION) {
+                Category category = new Category(nameField.getText());
+                categoryDAO.create(category);
+            }
         });
 
     }
