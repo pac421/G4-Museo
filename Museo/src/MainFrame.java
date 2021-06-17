@@ -1,10 +1,34 @@
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class MainFrame extends JFrame {
 
     public MainFrame() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menuOptions = new JMenu("Options");
+        menuBar.add(menuOptions);
+
+        JMenuItem menuItemDisconnect = new JMenuItem("Déconnexion");
+        menuItemDisconnect.addActionListener(e -> {
+            System.out.println("Disconnect..");
+
+            try {
+                FileWriter fileWriter = new FileWriter("credentials.txt");
+                fileWriter.write("");
+                fileWriter.close();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
+            this.setVisible(false);
+            this.dispose();
+        });
+        menuOptions.add(menuItemDisconnect);
+        this.setJMenuBar(menuBar);
+
         UIManager.put("TabbedPane.selected", Color.decode("#0081CC"));
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setBorder(new LineBorder(Color.white, 0, true));
