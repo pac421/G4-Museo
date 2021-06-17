@@ -1,6 +1,7 @@
 import bean.*;
 import dao.DAO;
 import dao.DAOFactory;
+import dao.PropertyDAO;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ public class WorkForm extends JPanel {
     JLabel ownedAtLabel, ownedFromLabel, priceLabel, startLabel, endLabel, lenderLabel;
     JTextField ownedAtField, ownedFromField, priceField, startField, endField, lenderField;
 
-    public WorkForm(JTable table, JButton add_btn, JButton edit_btn, JButton del_btn, JButton clear_btn, JPanel workPicturePanel) {
+    public WorkForm(JTable table, JButton add_btn, JButton edit_btn, JButton del_btn, JButton clear_btn, JPanel workPicturePanel, WorkPanel workPanel) {
         this.setBorder(new EmptyBorder(20, 0, 10, 0));
         this.setBackground(Color.white);
 
@@ -355,29 +356,70 @@ public class WorkForm extends JPanel {
                 startField.setText("");
                 endField.setText("");
                 lenderField.setText("");
+
+                workPanel.reload();
             }
         });
-/*
+
         edit_btn.addActionListener(e -> {
             String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
             System.out.println("edit selected_item_id : " + id);
-            Category category = categoryDAO.find(id);
-            category.setLabel(nameField.getText());
 
             Object[] options = {"Oui", "Non"};
             int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous modifier la ligne séléctionnée ?","Confirmer la modification", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
             if(dialogResult == JOptionPane.YES_OPTION){
-                categoryDAO.update(category);
+                Work work = workDAO.find(id);
+                categoryList.getSelectedItem();
+                work.setCategory((Category)categoryList.getSelectedItem());
+                work.setCollection((Collection)collectionList.getSelectedItem());
+                work.setLabel(titleField.getText());
+                work.setDepth(Double.parseDouble(depthField.getText()));
+                work.setHeight(Double.parseDouble(depthField.getText()));
+                work.setDescription(descriptionField.getText());
+                work.setPeriod(periodField.getText());
+                work.setWeight(Double.parseDouble(weightField.getText()));
+                work.setWidth(Double.parseDouble(widthField.getText()));
+
+                if(rbProperty.isSelected()){
+                    Property property = propertyDAO.find(id);
+                    property.setOwnedAt(Date.valueOf(ownedAtField.getText()));
+                    property.setPrice(Double.parseDouble(priceField.getText()));
+                    property.setOwnedFrom(ownedFromField.getText());
+                    propertyDAO.update(property);
+                }
+                else {
+                    Lend lend = lendDAO.find(id);
+                    lend.setStart(Date.valueOf(ownedAtField.getText()));
+                    lend.setEnd(Date.valueOf(endField.getText()));
+                    lend.setLender(lenderField.getText());
+                    lendDAO.update(lend);
+                }
+                workDAO.update(work);
 
                 del_btn.setVisible(false);
                 clear_btn.setVisible(false);
                 edit_btn.setVisible(false);
                 add_btn.setVisible(true);
 
-                nameField.setText("");
+                titleField.setText("");
+                descriptionField.setText("");
+                periodField.setText("");
+                heightField.setText("");
+                widthField.setText("");
+                depthField.setText("");
+                weightField.setText("");
+                categoryList.getModel().setSelectedItem("");
+                collectionList.getModel().setSelectedItem("");
+
+                ownedAtField.setText("");
+                ownedFromField.setText("");
+                priceField.setText("");
+                startField.setText("");
+                endField.setText("");
+                lenderField.setText("");
             }
         });
-
+/*
         add_btn.addActionListener(e -> {
             Object[] options = {"Oui", "Non"};
             int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajout une collection ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);

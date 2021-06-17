@@ -20,8 +20,9 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class WorkPanel extends JPanel {
+    public WorkPanel() {this.load();}
 
-    public WorkPanel() {
+    public void load() {
         this.setBorder(new EmptyBorder(20, 20, 20, 20));
         this.setBackground(Color.white);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -164,10 +165,17 @@ public class WorkPanel extends JPanel {
 
         JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(Color.white);
-        contentPanel.add(new WorkForm(table, add_btn, edit_btn, del_btn, clear_btn, workPicturePanel));
+        contentPanel.add(new WorkForm(table, add_btn, edit_btn, del_btn, clear_btn, workPicturePanel, this));
         contentPanel.add(workPicturePanel, BorderLayout.EAST);
 
         this.add(contentPanel);
         this.add(buttonPanel);
+    }
+
+    public void reload() {
+        this.removeAll();
+        this.revalidate();
+        this.repaint();
+        this.load();
     }
 }
