@@ -75,6 +75,8 @@ public class CollectionForm extends JPanel {
         clear_btn.addActionListener(e -> {
             System.out.println("clear selection");
 
+            table.getSelectionModel().clearSelection();
+
             del_btn.setVisible(false);
             clear_btn.setVisible(false);
             edit_btn.setVisible(false);

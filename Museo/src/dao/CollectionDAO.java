@@ -39,7 +39,7 @@ public class CollectionDAO extends DAO<Collection> {
     @Override
     public Collection find(String id) {
         try {
-            String sql = "SELECT * FROM Collection WHERE id = ?";
+            String sql = "SELECT * FROM COLLECTION WHERE id = ?";
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setString(1, id);
             ResultSet result = statement.executeQuery();
@@ -64,7 +64,7 @@ public class CollectionDAO extends DAO<Collection> {
     @Override
     public Collection create(Collection collection) {
         try {
-            String sql = "INSERT INTO Collection (id, label, period) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO COLLECTION (id, label, period) VALUES (?, ?, ?)";
             PreparedStatement statement = connect.prepareStatement(sql);
 
             statement.setString(1, collection.getId());
@@ -86,7 +86,7 @@ public class CollectionDAO extends DAO<Collection> {
     @Override
     public Collection update(Collection collection) {
         try {
-            String sql = "UPDATE Collection SET label = ?, period = ? WHERE id = ?";
+            String sql = "UPDATE COLLECTION SET label = ?, period = ? WHERE id = ?";
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setString(1, collection.getLabel());
             statement.setString(2, collection.getPeriod());
@@ -107,7 +107,7 @@ public class CollectionDAO extends DAO<Collection> {
     @Override
     public void delete(Collection collection) {
         try {
-            String sql = "DELETE FROM Collection WHERE id = ?";
+            String sql = "DELETE FROM COLLECTION WHERE id = ?";
             PreparedStatement statement = connect.prepareStatement(sql);
             statement.setString(1, collection.getId());
             statement.executeUpdate();

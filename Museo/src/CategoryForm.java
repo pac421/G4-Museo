@@ -68,6 +68,8 @@ public class CategoryForm extends JPanel {
         clear_btn.addActionListener(e -> {
             System.out.println("clear selection");
 
+            table.getSelectionModel().clearSelection();
+
             add_btn.setVisible(true);
             edit_btn.setVisible(false);
             del_btn.setVisible(false);
