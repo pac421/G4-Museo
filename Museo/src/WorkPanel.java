@@ -2,7 +2,7 @@ import bean.ArtistWork;
 import bean.Lend;
 import bean.Property;
 import bean.Work;
-import customUI.ForcedListSelectionModel;
+import customUX.ForcedListSelectionModel;
 import dao.DAO;
 import dao.DAOFactory;
 import javax.swing.*;

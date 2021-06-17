@@ -1,25 +1,28 @@
 import bean.Category;
-import bean.Collection;
-import bean.Category;
-import bean.Work;
-import dao.CategoryDAO;
+
 import dao.DAO;
 import dao.DAOFactory;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
-import java.util.ArrayList;
-import java.util.HashMap;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
 public class CategoryForm extends JPanel {
 
-    public CategoryForm(JTable table, JButton del_btn, JButton clear_btn) {
+    public CategoryForm(JTable table, JButton add_btn, JButton edit_btn, JButton del_btn, JButton clear_btn) {
+
+        this.setBorder(new EmptyBorder(20, 0, 10, 0));
+        this.setBackground(Color.white);
+
+        Font labelFont = new Font("Montserrat", Font.PLAIN, 16);
+        Font fieldFont = new Font("Montserrat", Font.PLAIN, 14);
 
         JLabel nameLabel = new JLabel("Name");
+        nameLabel.setFont(labelFont);
         JTextField nameField = new JTextField(20);
+        nameField.setFont(fieldFont);
 
 
-        this.setBorder(BorderFactory.createTitledBorder("Ajouter une catégorie"));
 
         GroupLayout groupLayout = new GroupLayout(this);
         this.setLayout(groupLayout);
@@ -49,10 +52,10 @@ public class CategoryForm extends JPanel {
                 String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
                 System.out.println("new selected_item_id : "+id);
 
-                this.setBorder(BorderFactory.createTitledBorder("Éditer une catégorie"));
-
+                add_btn.setVisible(false);
                 del_btn.setVisible(true);
                 clear_btn.setVisible(true);
+                edit_btn.setVisible(true);
 
                 Category category = categoryDAO.find(id);
                 nameField.setText(category.getLabel());
@@ -61,14 +64,38 @@ public class CategoryForm extends JPanel {
         clear_btn.addActionListener(e -> {
             System.out.println("clear selection");
 
-            this.setBorder(BorderFactory.createTitledBorder("Ajouter une catégorie"));
-
+            add_btn.setVisible(true);
+            edit_btn.setVisible(false);
             del_btn.setVisible(false);
             clear_btn.setVisible(false);
+
             nameField.setText("");
 
         });
 
+    }
+
+    static class Item {
+        private final String id;
+        private final String description;
+
+        public Item(String id, String description) {
+            this.id = id;
+            this.description = description;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        @Override
+        public String toString() {
+            return description;
+        }
     }
 
 }

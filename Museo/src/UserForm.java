@@ -1,39 +1,50 @@
-import bean.Category;
-import bean.Collection;
 import bean.Role;
 import bean.User;
 import dao.DAO;
 import dao.DAOFactory;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserForm extends JPanel {
 
-    public UserForm(JTable table, JButton del_btn, JButton clear_btn) {
+    public UserForm(JTable table, JButton add_btn, JButton edit_btn, JButton del_btn, JButton clear_btn) {
+
+        this.setBorder(new EmptyBorder(20, 0, 10, 0));
+        this.setBackground(Color.white);
+
+        Font labelFont = new Font("Montserrat", Font.PLAIN, 16);
+        Font fieldFont = new Font("Montserrat", Font.PLAIN, 14);
 
         JLabel firstNameLabel = new JLabel("Prénom");
+        firstNameLabel.setFont(labelFont);
         JTextField firstNameField = new JTextField(20);
+        firstNameField.setFont(fieldFont);
 
         JLabel lastNameLabel = new JLabel("Nom");
+        lastNameLabel.setFont(labelFont);
         JTextField lastNameField = new JTextField(20);
+        lastNameField.setFont(fieldFont);
 
         JLabel emailLabel = new JLabel("Email");
+        emailLabel.setFont(labelFont);
         JTextField emailField = new JTextField(20);
+        emailField.setFont(fieldFont);
 
         JComboBox<Object> roleList = new JComboBox<>();
+        roleList.setFont(fieldFont);
         DAO<Role> roleDAO = new DAOFactory().getRoleDAO();
         ArrayList<Role> roles = roleDAO.findAll(new HashMap<>());
-        JLabel roleLabel = new JLabel("Role");
+
+        JLabel roleLabel = new JLabel("Rôle");
+        roleLabel.setFont(labelFont);
         for (Role role : roles) {
             roleList.addItem(new Item(role.getId(), role.getLabel()));
         }
         roleList.getModel().setSelectedItem("");
-
-
-        this.setBorder(BorderFactory.createTitledBorder("Ajouter une catégorie"));
 
         GroupLayout groupLayout = new GroupLayout(this);
         this.setLayout(groupLayout);
@@ -71,10 +82,10 @@ public class UserForm extends JPanel {
                 String id = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
                 System.out.println("new selected_item_id : "+id);
 
-                this.setBorder(BorderFactory.createTitledBorder("Éditer une catégorie"));
-
+                add_btn.setVisible(false);
                 del_btn.setVisible(true);
                 clear_btn.setVisible(true);
+                edit_btn.setVisible(true);
 
                 User user = userDAO.find(id);
                 firstNameField.setText(user.getFirstname());
@@ -85,6 +96,22 @@ public class UserForm extends JPanel {
             }
         });
 
+        clear_btn.addActionListener(e -> {
+            System.out.println("clear selection");
+
+            table.getSelectionModel().clearSelection();
+
+            add_btn.setVisible(true);
+            edit_btn.setVisible(false);
+            del_btn.setVisible(false);
+            clear_btn.setVisible(false);
+
+            firstNameField.setText("");
+            lastNameField.setText("");
+            emailField.setText("");
+            roleList.getModel().setSelectedItem("");
+
+        });
     }
 
     static class Item {
