@@ -149,5 +149,14 @@ public class ArtistForm extends JPanel {
                 periodField.setText("");
             }
         });
+
+       add_btn.addActionListener(e -> {
+           Object[] options = {"Oui", "Non"};
+           int dialogResult = JOptionPane.showOptionDialog(null,"Voulez-vous ajout un artiste ?","Confirmer l'ajout", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
+           if(dialogResult == JOptionPane.YES_OPTION) {
+               Artist artist = new Artist(firstNameField.getText(), lastNameField.getText(), periodField.getText());
+               artistDAO.create(artist);
+           }
+       });
         }
 }

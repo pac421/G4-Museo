@@ -17,8 +17,10 @@ public class WorkDAO extends DAO<Work>{
             String sql = "SELECT * FROM WORK W" +
                     " INNER JOIN COLLECTION CO ON W.collection_id = CO.id" +
                     " INNER JOIN CATEGORY CA ON W.category_id = CA.id" +
-                    " LEFT JOIN USER U ON W.deleted_by_id = U.id" +
-                    " WHERE W.deleted_at IS NULL";
+                    " LEFT JOIN USER U ON W.deleted_by_id = U.id";
+            sql = addFilters(sql, filters);
+            sql += " AND W.deleted_at IS NULL";
+            System.out.println(sql);
 
             PreparedStatement statement = connect.prepareStatement(sql);
             ResultSet result = statement.executeQuery();

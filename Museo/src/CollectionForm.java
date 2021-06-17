@@ -91,7 +91,7 @@ public class CollectionForm extends JPanel {
 
             DAO<Work> workDAO = new DAOFactory().getWorkDAO();
             HashMap<String, String> filters = new HashMap<>();
-            filters.put("collection_id", collection.getId());
+            filters.put("W.collection_id", collection.getId());
             ArrayList<Work> works = workDAO.findAll(filters);
 
             if(works.size() == 0) {
