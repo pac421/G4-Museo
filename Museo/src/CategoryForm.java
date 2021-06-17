@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class CategoryForm extends JPanel {
 
-    public CategoryForm(JTable table, JButton add_btn, JButton edit_btn, JButton del_btn, JButton clear_btn) {
+    public CategoryForm(JTable table, JButton add_btn, JButton edit_btn, JButton del_btn, JButton clear_btn, CategoryPanel categoryPanel) {
 
         this.setBorder(new EmptyBorder(20, 0, 10, 0));
         this.setBackground(Color.white);
@@ -101,6 +101,8 @@ public class CategoryForm extends JPanel {
                     add_btn.setVisible(true);
 
                     nameField.setText("");
+
+                    categoryPanel.reload();
                 }
             }
             else{
@@ -125,6 +127,8 @@ public class CategoryForm extends JPanel {
                 add_btn.setVisible(true);
 
                 nameField.setText("");
+
+                categoryPanel.reload();
             }
         });
 
