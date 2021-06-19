@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class LoginFrame extends JFrame {
 
@@ -29,7 +30,8 @@ public class LoginFrame extends JFrame {
         panel.add(closeButton);
 
         try {
-            BufferedImage logo = ImageIO.read(new File("resources/logo.png"));
+            URL logoURL = ClassLoader.getSystemResource("logo.png");
+            BufferedImage logo = ImageIO.read(new File(logoURL.getFile()));
             JLabel logoLabel = new JLabel(new ImageIcon(logo.getScaledInstance(200, 200, Image.SCALE_FAST)));
             logoLabel.setBorder(new EmptyBorder(0, 85, 20, 0));
             panel.add(logoLabel);

@@ -1,8 +1,12 @@
 package dao;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 import java.util.Properties;
 
@@ -16,7 +20,8 @@ public class MysqlConnect {
     public static void setAttributes() {
         try {
             Properties properties = new Properties();
-            FileInputStream in = new FileInputStream("resources/db.properties");
+            URL fileURL = ClassLoader.getSystemResource("db.properties");
+            FileInputStream in = new FileInputStream(fileURL.getFile());
             properties.load(in);
             in.close();
 

@@ -1,7 +1,11 @@
 import dao.MysqlConnect;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -25,7 +29,8 @@ public class EntryPoint {
                     System.out.println("Credential file authentication success, starting main frame..");
 
                     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-                    ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("resources/montserrat_regular_400.ttf")));
+                    URL fontURL = ClassLoader.getSystemResource("montserrat_regular_400.ttf");
+                    ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(fontURL.getFile())));
 
                     new MainFrame();
                 } else {

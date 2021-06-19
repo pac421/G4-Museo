@@ -3,6 +3,7 @@ import dao.DAO;
 import dao.DAOFactory;
 import dao.PropertyDAO;
 
+import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -269,7 +270,8 @@ public class WorkForm extends JPanel {
                 workPicturePanel.repaint();
 
                 try {
-                    BufferedImage workBufferedImage = ImageIO.read(new File("resources/work_pictures/"+firstPicture.getId()+"."+firstPicture.getExtension()));
+                    URL picURL = ClassLoader.getSystemResource("work_pictures/"+firstPicture.getId()+"."+firstPicture.getExtension());
+                    BufferedImage workBufferedImage = ImageIO.read(new File(picURL.getFile()));
                     JLabel workPicLabel = new JLabel(new ImageIcon(workBufferedImage.getScaledInstance(410, 410, Image.SCALE_FAST)));
                     workPicturePanel.add(workPicLabel);
                 } catch (IOException e) {
