@@ -30,7 +30,8 @@ public class LoginFrame extends JFrame {
         panel.add(closeButton);
 
         try {
-            URL logoURL = ClassLoader.getSystemResource("logo.png");
+            //URL logoURL = ClassLoader.getSystemResource("logo.png");
+            URL logoURL = LoginFrame.class.getResource("logo.png");
             BufferedImage logo = ImageIO.read(new File(logoURL.getFile()));
             JLabel logoLabel = new JLabel(new ImageIcon(logo.getScaledInstance(200, 200, Image.SCALE_FAST)));
             logoLabel.setBorder(new EmptyBorder(0, 85, 20, 0));
